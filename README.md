@@ -77,13 +77,17 @@ Voy a ir listando los distintos elementos, en base al documento de Práctica fin
 ### Flujo principal
 
 1. window.onload inicia metodo imagenes y listeners
-2. La unica iteracción posible es crear el usuario, tras esto se invierten los display y se muestra el div btn de donde parte toda la iteracción de la app
-3. Dependiendo de que botón se pulse lo detectaran los listeners, en ambito general:
-    3.1. Pulsar botón llama metodo show(), enviando el id del form a mostrar
-        3.1.1. Se oculta o no el resto de bloque según necesite el metodo
-    3.2. Se ejecutan los metodos del metodo especifico
-    3.3. Si llama a showInner, es decir, va a mostrar resultados o errores
-        3.3.1. Recibe el mensaje, oculta o no el resto de forms y muestra el contenido en el div de "resultados"
+
+2. La única iteracción posible es crear el usuario
+   2.1. Tras esto se invierten los display y se muestra el div btn de donde parte toda la iteracción de la app
+
+3. Dependiendo de qué botón se pulse, lo detectarán los listeners, en ámbito general:
+   3.1. Pulsar botón llama metodo show(), enviando el id del form a mostrar <br>
+        3.1.1. Se oculta o no el resto de bloque según necesite el metodo <br>
+   3.2. Se ejecutan los metodos del metodo especifico <br>
+   3.3. Si llama a showInner, es decir, va a mostrar resultados o errores <br>
+        3.3.1. Recibe el mensaje, oculta o no el resto de forms y muestra el contenido en el div de "resultados" <br>
+
 
 Como funciona cada metodo individualmente está explicado a traves de comentarios en el codigo.
 
