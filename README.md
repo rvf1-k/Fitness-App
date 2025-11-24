@@ -1,4 +1,5 @@
-# Práctica final tema 4. Formularios y Eventos - Fitness App
+# Práctica final tema 4. Formularios y Eventos
+## Fitness App
 
 Voy a ir listando los distintos elementos, en base al documento de Práctica final tema 4.pdf
 
