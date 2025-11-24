@@ -1,5 +1,4 @@
 # Práctica final tema 4. Formularios y Eventos - Fitness App
-## Rafael Moreno Riquelme - 2DAW
 
 Voy a ir listando los distintos elementos, en base al documento de Práctica final tema 4.pdf
 
