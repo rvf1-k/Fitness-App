@@ -1,112 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-KN97V1pX+2b9JvAxk+9c9b1n/pkMGXZH0iWlMzUR+ssU5ikXrQ8R8w2s0mc5hLdP0yh7tY+wBpK7Xr1I7pkh0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-</head>
-
-<body>
-    <h1>Fitness app</h1>
+  <body>
+    <button id="toggleTheme">
+      <i class="fa-solid fa-sun"></i>
+    </button>
     <div>
-        <img src="" alt="Imagen de cabecera de Fitness App" height="300">
+      <h1>Fitness app</h1>
     </div>
 
-    <section id="login" class="login">
-        <button id="mostrarForm" type="button">Iniciar sesión</button>
-    </section>
+    <div>
+      <img src="" alt="Imagen de cabecera de Fitness App" height="300" />
+    </div>
 
-    <section id="div_login" class="login" style="display:none;">
-        <form id="form_login">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre">
+    <div id="inicio" class="inicio">
+      <button id="mostrarForm" type="button">Registrarse</button>
+    </div>
 
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo">
+    <div id="registrar" class="registrar oculto">
+      <form id="form_registro">
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" />
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" />
+        <input type="button" id="crearUsuario" value="Enviar" />
+      </form>
+    </div>
 
-            <label for="altura">Altura(cm):</label>
-            <input type="number" id="altura">
+    <div id="div_login" class="login oculto">
+      <form id="form_persona">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" />
 
-            <label for="peso">Peso(kg):</label>
-            <input type="number" id="peso">
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" />
 
-            <label for="fecha_nacimiento">Fecha nacimiento:</label>
-            <input type="date" id="fecha_nacimiento">
+        <label for="altura">Altura(cm):</label>
+        <input type="number" id="altura" />
 
-            <input type="button" id="crearUsuario" value="Crear">
+        <label for="peso">Peso(kg):</label>
+        <input type="number" id="peso" />
+
+        <label for="fecha_nacimiento">Fecha nacimiento:</label>
+        <input type="date" id="fecha_nacimiento" />
+
+        <input type="button" id="crearPersona" value="Crear" />
+      </form>
+    </div>
+
+    <div id="perfil" class="oculto">
+      <h3>Usuario</h3>
+      <p id="datosPerfil"></p>
+    </div>
+
+    <div id="btn" class="oculto">
+      <button id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
+      <button id="mostrarEntrenamientos">Mostrar entrenamientos</button>
+      <button id="mostrarMejorEntrenamiento">
+        Mostrar mejor entrenamiento
+      </button>
+      <button id="mostrarTotales">Mostrar totales</button>
+      <button id="mostrarForo">Foro</button>
+      <button id="cerrarSesion">Cerrar sesión</button>
+    </div>
+
+    <section id="contenido">
+      <div id="formularios_btn" class="oculto">
+        <form id="añadirEntrenamiento" class="oculto">
+          <label for="distanciaInput">Distancia(m):</label>
+          <input type="number" id="distanciaInput" />
+          <label for="tipoActividad">Tipo de entrenamiento:</label>
+          <select id="tipoActividad" required>
+            <option value="" disabled selected>Selecciona una actividad</option>
+            <option value="ciclismo">Ciclismo</option>
+            <option value="correr">Correr</option>
+            <option value="natacion">Natación</option>
+            <option value="senderismo">Senderismo</option>
+          </select>
+
+          <p>Tiempo:</p>
+          <label for="horas">Horas:</label>
+          <input type="number" id="horas" min="0" max="99" />
+          <label for="minutos">Minutos:</label>
+          <input type="number" id="minutos" min="0" max="59" />
+          <label for="fechaEntrenamiento">Fecha:</label>
+          <input
+            type="datetime-local"
+            id="fechaEntrenamiento"
+            value="2000-12-12T00:00"
+          />
+
+          <input type="button" id="crearEntrenamiento" value="Crear" />
         </form>
-    </section>
 
-    <section id="perfil" style="display: none;">
-        <h3>Usuario</h3>
-        <p id="datosPerfil"></p>
-    </section>
+        <form id="mejorEntrenamiento" class="oculto">
+          <input
+            type="radio"
+            id="distanciaRadio"
+            name="dato"
+            value="distancia"
+          />
+          <label for="distanciaRadio">Distancia</label>
 
-    <section id="btn" style="display: none;">
-        <button id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
-        <button id="mostrarEntrenamientos">Mostrar entrenamientos</button>
-        <button id="mostrarMejorEntrenamiento">Mostrar mejor entrenamiento</button>
-        <button id="mostrarTotales">Mostrar totales</button>
-    </section>
+          <input type="radio" id="tiempoRadio" name="dato" value="tiempo" />
+          <label for="tiempoRadio">Tiempo</label>
 
-    <section id="formularios_btn" style="display: none;">
-
-        <form id="añadirEntrenamiento" style="display: none;">
-            <label for="distanciaInput">Distancia(m):</label>
-            <input type="number" id="distanciaInput">
-            <label for="tipoActividad">Tipo de entrenamiento:</label>
-            <select id="tipoActividad" required>
-                <option value="" disabled selected>Selecciona una actividad</option>
-                <option value="ciclismo">Ciclismo</option>
-                <option value="correr">Correr</option>
-                <option value="natacion">Natación</option>
-                <option value="senderismo">Senderismo</option>
-            </select>
-
-
-            <p>Tiempo:</p>
-            <label for="horas">Horas:</label>
-            <input type="number" id="horas" min="0" max="99">
-            <label for="minutos">Minutos:</label>
-            <input type="number" id="minutos" min="0" max="59">
-            <label for="fechaEntrenamiento">Fecha:</label>
-            <input type="datetime-local" id="fechaEntrenamiento" value="2000-12-12T00:00">
-
-            <input type="button" id="crearEntrenamiento" value="Crear">
+          <input
+            type="radio"
+            id="velocidadRadio"
+            name="dato"
+            value="velocidad"
+          />
+          <label for="velocidadRadio">Velocidad</label>
         </form>
 
+        <form id="totales" class="oculto">
+          <input
+            type="radio"
+            id="distanciaTotal"
+            name="total"
+            value="distancia"
+          />
+          <label for="distanciaRadio">Distancia Total</label>
 
-        <form id="mejorEntrenamiento" style="display: none;">
-            <input type="radio" id="distanciaRadio" name="dato" value="distancia">
-            <label for="distanciaRadio">Distancia</label>
-
-            <input type="radio" id="tiempoRadio" name="dato" value="tiempo">
-            <label for="tiempoRadio">Tiempo</label>
-
-            <input type="radio" id="velocidadRadio" name="dato" value="velocidad">
-            <label for="velocidadRadio">Velocidad</label>
+          <input type="radio" id="tiempoTotal" name="total" value="tiempo" />
+          <label for="tiempoRadio">Tiempo Total</label>
         </form>
 
-        <form id="totales" style="display: none;">
-            <input type="radio" id="distanciaTotal" name="total" value="distancia">
-            <label for="distanciaRadio">Distancia Total</label>
-
-            <input type="radio" id="tiempoTotal" name="total" value="tiempo">
-            <label for="tiempoRadio">Tiempo Total</label>
+        <form id="foro_form" class="oculto">
+          <input
+            type="text"
+            name="nick"
+            id="nick"
+            placeholder="Nick de usuario"
+            title="Puedes editar el nick con el que hacer publicaciones en el foro, de forma predeterminada se usará el de la cuenta."
+          />
+          <br />
+          <br />
+          <textarea
+            name="opinion"
+            id="opinion"
+            placeholder="Opinion.."
+            cols="50"
+            rows="5"
+          ></textarea>
+          <br />
+          <input type="button" id="publicarPost" value="Publicar" />
         </form>
-
+      </div>
+      <div id="resultados" class="oculto"></div>
+      <div id="foro" class="oculto"></div>
     </section>
-    <section id="resultados" style="display: none;">
-        <p id="innerText">Holaa</p>
-    </section>
-
     <script src="app.js"></script>
-</body>
-
+  </body>
 </html>

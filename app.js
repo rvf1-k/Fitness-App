@@ -1,15 +1,44 @@
-class Persona {
-  constructor(nombre, correo, altura, peso, fechaNacimiento) {
+class Usuario {
+  constructor(usuario, password) {
+    this.usuario = usuario;
+    this.password = password;
+  }
+}
+
+class Persona extends Usuario {
+  constructor(
+    usuario,
+    password,
+    nombre,
+    correo,
+    altura,
+    peso,
+    fechaNacimiento
+  ) {
+    super(usuario, password);
     this.nombre = nombre;
     this.correo = correo;
     this.altura = altura; //cm
     this.peso = peso; //kg
     this.fechaNacimiento = fechaNacimiento;
     this.entrenamientos = [];
+    //* Para controlar los entrenamientos creados y borrarlos, se le añade un Id unico partiendo desde 0
+    this.entrenamientoId = 0;
   }
 
   añadirEntrenamiento(entrenamiento) {
     this.entrenamientos.push(entrenamiento);
+  }
+
+  eliminarEntrenamiento(id) {
+    for (let i = 0; i < this.entrenamientos.length; i++) {
+      if (this.entrenamientos[i].getId() == id) {
+        this.entrenamientos.splice(i, 1);
+        console.log(this.entrenamientos);
+
+        break;
+      }
+    }
   }
 
   getEntrenamientos() {
@@ -19,6 +48,10 @@ class Persona {
   getEdad() {
     const fechaActual = new Date();
     return fechaActual.getFullYear() - this.fechaNacimiento.getFullYear();
+  }
+
+  nextId() {
+    return ++this.entrenamientoId;
   }
 
   mostrarInfo() {
@@ -35,12 +68,17 @@ const Nivel = {
 };
 
 class Entrenamiento {
-  constructor(distancia, tiempo, tipo, fecha) {
+  constructor(id, distancia, tiempo, tipo, fecha) {
+    this.id = id;
     this.distancia = distancia; //metros
     this.tiempo = tiempo; //min
     this.fecha = fecha;
     this.tipo = tipo;
     this.nivel = this.marcarNivel();
+  }
+
+  getId() {
+    return this.id;
   }
 
   getDistancia() {
@@ -110,42 +148,48 @@ class Entrenamiento {
   getIconTipo() {
     switch (this.tipo) {
       case "ciclismo":
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30" height="30">
-        <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-        <path d="M400 160C426.5 160 448 138.5 448 112C448 85.5 426.5 64 400 64C373.5 64 352 85.5 352 112C352 138.5 373.5 160 400 160zM427.2 224L365.4 175.2C348.1 161.6 323.7 161.4 306.3 174.9L223.2 239.1C192.5 262.9 194.7 309.9 227.5 330.7L288 369.1L288 480C288 497.7 302.3 512 320 512C337.7 512 352 497.7 352 480L352 352C352 341.3 346.7 331.3 337.8 325.4L295 296.9L355.3 248.4L396 281C401.7 285.5 408.7 288 416 288L480 288C497.7 288 512 273.7 512 256C512 238.3 497.7 224 480 224L427.2 224zM144 576C205.9 576 256 525.9 256 464C256 402.1 205.9 352 144 352C82.1 352 32 402.1 32 464C32 525.9 82.1 576 144 576zM496 576C557.9 576 608 525.9 608 464C608 402.1 557.9 352 496 352C434.1 352 384 402.1 384 464C384 525.9 434.1 576 496 576z"/></svg>`;
-
+        return "fa-person-biking";
       case "correr":
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30" height="30">
-          <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-          <path d="M352.5 32C383.4 32 408.5 57.1 408.5 88C408.5 118.9 383.4 144 352.5 144C321.6 144 296.5 118.9 296.5 88C296.5 57.1 321.6 32 352.5 32zM219.6 240C216.3 240 213.4 242 212.2 245L190.2 299.9C183.6 316.3 165 324.3 148.6 317.7C132.2 311.1 124.2 292.5 130.8 276.1L152.7 221.2C163.7 193.9 190.1 176 219.6 176L316.9 176C345.4 176 371.7 191.1 386 215.7L418.8 272L480.4 272C498.1 272 512.4 286.3 512.4 304C512.4 321.7 498.1 336 480.4 336L418.8 336C396 336 375 323.9 363.5 304.2L353.5 287.1L332.8 357.5L408.2 380.1C435.9 388.4 450 419.1 438.3 445.6L381.7 573C374.5 589.2 355.6 596.4 339.5 589.2C323.4 582 316.1 563.1 323.3 547L372.5 436.2L276.6 407.4C243.9 397.6 224.6 363.7 232.9 330.6L255.6 240L219.7 240zM211.6 421C224.9 435.9 242.3 447.3 262.8 453.4L267.5 454.8L260.6 474.1C254.8 490.4 244.6 504.9 231.3 515.9L148.9 583.8C135.3 595 115.1 593.1 103.9 579.5C92.7 565.9 94.6 545.7 108.2 534.5L190.6 466.6C195.1 462.9 198.4 458.1 200.4 452.7L211.6 421z"/>
-          </svg>`;
-
+        return "fa-person-running";
       case "natacion":
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30" height="30">
-            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-            <path d="M552 216C552 185.1 526.9 160 496 160C465.1 160 440 185.1 440 216C440 246.9 465.1 272 496 272C526.9 272 552 246.9 552 216zM293.4 262.2L204.8 336.1C205.9 336.1 207 336 208.1 336C241.2 335.8 274.4 346.2 302.5 367.4C324.6 384 331.6 384 353.7 367.4C381.2 346.7 413.6 336.2 446.1 336C450.9 336 455.8 336.2 460.6 336.6C452.3 306.6 436.3 278.9 413.8 256.4C395.4 238 373.2 223.7 348.8 214.6L280.2 188.9C252.8 178.6 222.2 181.4 197.1 196.5L143.6 228.6C128.4 237.7 123.5 257.3 132.6 272.5C141.7 287.7 161.3 292.6 176.5 283.5L230 251.3C238.4 246.3 248.6 245.4 257.7 248.8L293.4 262.2zM403.4 444.1C424.7 428 453.3 428 474.6 444.1C493.6 458.5 516.5 472.3 541.8 477.4C568.3 482.8 596.1 478.2 622.5 458.3C633.1 450.3 635.2 435.3 627.2 424.7C619.2 414.1 604.2 412 593.6 420C578.7 431.2 565 433.1 551.3 430.3C536.4 427.3 520.4 418.4 503.5 405.7C465.1 376.7 413 376.7 374.5 405.7C350.5 423.8 333.8 432 320 432C306.2 432 289.5 423.8 265.5 405.7C227.1 376.7 175 376.7 136.5 405.7C114.9 422 95.2 431.5 77.6 431.4C68 431.3 57.7 428.4 46.4 419.9C35.8 411.9 20.8 414 12.8 424.6C4.8 435.2 7 450.3 17.6 458.3C36.7 472.7 57 479.3 77.4 479.4C111.3 479.6 141.7 462 165.5 444.1C186.8 428 215.4 428 236.7 444.1C260.9 462.4 289 480 320.1 480C351.2 480 379.2 462.3 403.5 444.1z"/></svg>`;
-
+        return "fa-person-swimming";
       case "senderismo":
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30" height="30">
-        <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-        <path d="M320 144C350.9 144 376 118.9 376 88C376 57.1 350.9 32 320 32C289.1 32 264 57.1 264 88C264 118.9 289.1 144 320 144zM233.4 291.9L256 269.3L256 338.6C256 366.6 268.2 393.3 289.5 411.5L360.9 472.7C366.8 477.8 370.7 484.8 371.8 492.5L384.4 580.6C386.9 598.1 403.1 610.3 420.6 607.8C438.1 605.3 450.3 589.1 447.8 571.6L435.2 483.5C431.9 460.4 420.3 439.4 402.6 424.2L368.1 394.6L368.1 279.4L371.9 284.1C390.1 306.9 417.7 320.1 446.9 320.1L480.1 320.1C497.8 320.1 512.1 305.8 512.1 288.1C512.1 270.4 497.8 256.1 480.1 256.1L446.9 256.1C437.2 256.1 428 251.7 421.9 244.1L404 221.7C381 192.9 346.1 176.1 309.2 176.1C277 176.1 246.1 188.9 223.4 211.7L188.1 246.6C170.1 264.6 160 289 160 314.5L160 352C160 369.7 174.3 384 192 384C209.7 384 224 369.7 224 352L224 314.5C224 306 227.4 297.9 233.4 291.9zM245.8 471.3C244.3 476.5 241.5 481.3 237.7 485.1L169.4 553.4C156.9 565.9 156.9 586.2 169.4 598.7C181.9 611.2 202.2 611.2 214.7 598.7L283 530.4C294.5 518.9 302.9 504.6 307.4 488.9L309.6 481.3L263.6 441.9C261.1 439.7 258.6 437.5 256.2 435.1L245.8 471.3z"/></svg>`;
-
+        return "fa-person-walking";
       default:
         return "";
     }
   }
 
+  tipoHtml() {
+    return `<i class="fa-solid ${this.getIconTipo()}"></i><br>${this.tipo}`;
+  }
+
   mostrarInfo() {
-    return `
-    <tr>
-        <td>${this.getIconTipo()}<br>${this.tipo}</td>
-        <td>${this.distancia}</td>
-        <td>${this.getHorasMin()}</td>
-        <td>${this.getVelocidad().toFixed(2)}</td>
-        <td>${this.getFecha()}</td>
-        <td>${this.nivel}</td>
-    </tr>
-    `;
+    const tr = document.createElement("tr");
+
+    const content = [
+      this.tipoHtml(),
+      this.distancia,
+      this.getHorasMin(),
+      this.getVelocidad().toFixed(2),
+      this.getFecha(),
+      this.nivel,
+    ];
+
+    content.forEach((elemento) => {
+      const td = document.createElement("td");
+      td.innerHTML = elemento;
+      tr.appendChild(td);
+    });
+
+    const td = document.createElement("td");
+    td.innerHTML =
+      '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>';
+
+    tr.appendChild(td);
+    tr.dataset.id = this.id;
+
+    return tr;
   }
 }
 
@@ -155,7 +199,27 @@ class Entrenamiento {
 function listeners() {
   //* Muestra el form de crear usuario tras pulsar Iniciar sesión
   document.getElementById("mostrarForm").addEventListener("click", () => {
-    document.getElementById("div_login").style.display = "block";
+    if (localStorage?.sesion) {
+      const nomUsuario = localStorage.usuario;
+      const password = localStorage.password;
+      const correo = localStorage.correo;
+      const nombre = localStorage.nombre;
+      const altura = localStorage.altura;
+      const peso = localStorage.peso;
+      const fechaNacimiento = new Date(localStorage.fechaNacimiento);
+      usuario = new Persona(
+        nomUsuario,
+        password,
+        nombre,
+        correo,
+        altura,
+        peso,
+        fechaNacimiento
+      );
+      crearIndex();
+    } else {
+      registrar.classList.remove("oculto");
+    }
   });
 
   //* Muestra el form de añadir entrenamiento
@@ -167,12 +231,31 @@ function listeners() {
   document.getElementById("mostrarTotales").addEventListener("click", () => {
     show("totales");
   });
+  //* Muestra el form de radio para calcular los totales
+  document.getElementById("mostrarForo").addEventListener("click", () => {
+    show("foro_form");
+    show("foro", false);
+    document.getElementById("nick").placeholder = "Nick de usuario: " + localStorage.usuario
+  });
 
   //* Muestra todos los entrenamientos listados
   document
     .getElementById("mostrarEntrenamientos")
     .addEventListener("click", () => {
       showInner(mostrarEntrenamientos());
+
+      const borrarBtn = document.querySelectorAll(".eliminar");
+
+      borrarBtn.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const tr = this.closest("tr");
+          const id = tr.dataset.id;
+
+          usuario.eliminarEntrenamiento(id);
+
+          tr.remove();
+        });
+      });
     });
 
   //* Muestra form Mejor Entrenamiento
@@ -220,18 +303,33 @@ function listeners() {
     .getElementById("crearEntrenamiento")
     .addEventListener("click", crearEntrenamiento);
 
-  //* Crear usuario
-  document.getElementById("crearUsuario").addEventListener("click", () => {
+  //* Crear Persona
+  document.getElementById("crearPersona").addEventListener("click", () => {
     //* Si es true, se cambian los display de los formularios
-    if (crearUsuario()) {
+
+    if (crearPersona()) {
+      div_login.classList.remove("oculto");
       crearIndex();
     }
   });
+  //* Crear usuario
+  document.getElementById("crearUsuario").addEventListener("click", () => {
+    //* Si es true, se cambian los display de los formularios
 
+    if (crearUsuario()) {
+      hider("form_persona");
+      registrar.classList.add("oculto");
+      inicio.classList.add("oculto");
+      div_login.classList.remove("oculto");
+    }
+  });
+
+  /*
+  *Forma parte de la primera versión de la practica realizada en  el tema 4, he considerado más optimo utilizar las propiedades CSS
 
   const inputs = document.querySelectorAll("input, select");
 
-  inputs.forEach(el => {
+  inputs.forEach((el) => {
     el.addEventListener("focus", () => {
       el.style.borderColor = "#888";
       el.style.boxShadow = "0 0 5px rgba(100,100,100,0.3)";
@@ -243,10 +341,10 @@ function listeners() {
       el.style.boxShadow = "none";
     });
   });
-
+  
   const buttons = document.querySelectorAll("button");
 
-  buttons.forEach(btn => {
+  buttons.forEach((btn) => {
     btn.addEventListener("mouseover", () => {
       btn.style.backgroundColor = "rgb(241, 241, 241)";
       btn.style.transform = "translateY(-1px)";
@@ -268,8 +366,37 @@ function listeners() {
       btn.style.transform = "translateY(-1px)";
     });
   });
- 
+*/
 
+  /*
+  * Si se un elemento con la clase .cerrar, es decir la X del popup se le añade un listener.
+  Esto se debe a que solo aparece mientras no se haya iniciado sesión.
+
+  <div class="popup">
+    <span class="cerrar">...
+  </div>
+
+  En este caso se elimina el padre de el span, es decir el div que conforma el popup
+  */
+  document.querySelector(".cerrar")?.addEventListener("click", function () {
+    this.parentElement.remove();
+  });
+
+  //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
+  document.getElementById("cerrarSesion").addEventListener("click", () => {
+    localStorage.clear();
+    location.reload();
+  });
+
+  //* Cambia el tema entre oscuro y blanco
+  document
+  .getElementById("toggleTheme")
+  .addEventListener("click", addDarkTheme);
+  
+  //* Añade publicaciones al foro
+  document
+    .getElementById("publicarPost")
+    .addEventListener("click", publicarPost);
 }
 
 /**
@@ -279,11 +406,12 @@ function listeners() {
  */
 function show(id, hide = true) {
   if (hide) {
-    hider();
+    hider(id);
   }
-  document.getElementById("formularios_btn").style.display = "block";
+  formularios_btn.classList.remove("oculto");
+
   const elemento = document.getElementById(id);
-  elemento.style.display = "block";
+  elemento.classList.remove("oculto");
 
   switch (id) {
     case "añadirEntrenamiento":
@@ -291,7 +419,9 @@ function show(id, hide = true) {
       break;
     case "totales":
     case "mejorEntrenamiento":
-      showInner("Selecciona una de las categorias", false);
+      const text = document.createElement("p");
+      text.textContent = "Selecciona una de las categorias";
+      showInner([text], false);
       break;
 
     default:
@@ -304,128 +434,53 @@ function show(id, hide = true) {
  */
 function showInner(contenido, hide = true) {
   const resultadoInner = document.getElementById("resultados");
+  resultadoInner.innerHTML = "";
   if (hide) {
     hider();
   }
-  resultadoInner.style.display = "block";
-  resultadoInner.innerHTML = contenido;
+  resultadoInner.classList.remove("oculto");
+  contenido.forEach((elemento) => {
+    resultadoInner.appendChild(elemento);
+  });
 }
 
 /**
  * Este metodo oculta todos los formularios y reinicia la [section id=resultados]
  */
-function hider() {
-  document.getElementById("formularios_btn").style.display = "none";
+function hider(id = null) {
+  formularios_btn.classList.add("oculto");
+  foro.classList.add("oculto");
 
   const resultadoInner = document.getElementById("resultados");
-  resultadoInner.style.display = "none";
+  resultados.classList.add("oculto");
   resultadoInner.innerHTML = "";
 
   const forms = document.querySelectorAll("form");
 
   forms.forEach((form) => {
-    form.style.display = "none";
+    if (id != form.id) {
+      form.classList.add("oculto");
+    }
   });
 }
 
 /**
- * ? Mejorable
- * Se basa en la logica de crearUsuario(), pero al haber campos que terminan compartiendo valor debo compararlos juntos y no se puede desde el foreach
- * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
- *
- * ? Es mejorable la logica, puede en vez de un foreach, recibir los valores y comprobarlos individualemte
- */
-function crearEntrenamiento() {
-  const entrenamiento = document.getElementById("añadirEntrenamiento");
-
-  let mensaje = "";
-  let ultimatum = true;
-  entrenamiento.querySelectorAll("input").forEach((input) => {
-    let error = false;
-    let tempMsj = "";
-
-    switch (input.id) {
-      case "distanciaInput":
-        error = input.value < 0 || input.value == null || input.value == "";
-        tempMsj = "Introduce un valor valido en " + input.id;
-        break;
-      case "fechaEntrenamiento":
-        error =
-          input.value == "" ||
-          input.value == null ||
-          new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
-        tempMsj = "Introduce una fecha valida";
-        break;
-      default:
-        break;
-    }
-    if (error) {
-      input.value = "";
-      mensaje += `<p class="p-error">[ERROR] - ${tempMsj}</p>`;
-      input.className = "input-error";
-      ultimatum = false;
-    } else {
-      input.className = "input-normal";
-    }
-  });
-
-  const distancia = Number(entrenamiento.distanciaInput.value);
-  const horas = Number(entrenamiento.horas.value);
-  const minutos = Number(entrenamiento.minutos.value);
-  const tiempo = horas * 60 + minutos; //* min
-
-  //* Para controlar el tiempo, por si los dos tienen valor 0 o negativo.
-  if (tiempo <= 0) {
-    mensaje += `<p class="p-error">[ERROR] - Introdocude un tiempo valido</p>`;
-    entrenamiento.horas.className = "input-error";
-    entrenamiento.minutos.className = "input-error";
-    ultimatum = false;
-  }
-
-  //* Para controlar el tipo, por si no hay.
-  const tipo = tipoActividad.value;
-  if (tipo == "" || tipo == null) {
-    mensaje += `<p class="p-error">[ERROR] - Introdocude el tipo de entrenamiento</p>`;
-    entrenamiento.tipoActividad.className = "input-error";
-    entrenamiento.tipoActividad.className = "input-error";
-    ultimatum = false;
-  } else {
-    entrenamiento.tipoActividad.className = "input-normal";
-  }
-
-  const fecha = new Date(entrenamiento.fechaEntrenamiento.value);
-
-  if (ultimatum) {
-    persona1.añadirEntrenamiento(
-      new Entrenamiento(distancia, tiempo, tipo, fecha)
-    );
-    showInner(
-      `<p class="p-exito">Entrenamiento ${
-        persona1.getEntrenamientos().length
-      }º creado (pulsa Mostrar entrenamientos para ver tus entrenamientos)</p>`,
-      false
-    );
-  } else {
-    showInner(mensaje, false);
-  }
-  console.log(persona1);
-}
-
-/**
- * Este metodo crear los datos de @persona1
- * Busca el form donde se inician los datos siendo [form id ="form_login"] y se guarda en @login
+ * Este metodo crear los datos de la persona para añadirlos a @usuario
+ * Busca el form donde se inician los datos siendo [form id ="form_login"] y se guarda en @persona
  * La variable @ultimatum sirve para que si uno de los inputs no es correcto, no se cree la persona, se devuelve en bool para saber si mostrar el resto de app
- * La variable @mensaje crea los mensajes de error, que se mostraran debajo para ayudar a introducir los valores correctos
+ * La variable @mensajes crea los mensajes de error, que se mostraran debajo para ayudar a introducir los valores correctos
  * Se recorre todos los input y en base al id con un swtich se hacen sus comprobaciones individuales con un regex llamando a comprobarRegex()
  * En @error se vuelve true si hay un error, inciando el if(error), mostrando el mensaje de error y cambiando la clase al input para ponerle estilo
- * Si @ultimatum es true se crea @persona1 si no se escriben los mensajes con showInner(), se devuele false y hasta que el listener llame de nuevo
+ * Si @ultimatum es true se crea @usuario si no se escriben los mensajes con showInner(), se devuele false y hasta que el listener llame de nuevo
+ * 
+ * Estos datos recogidos se añaden a localStorage
  */
-function crearUsuario() {
-  const login = document.getElementById("form_login");
+function crearPersona() {
+  const persona = document.getElementById("form_persona");
 
   let ultimatum = true;
-  let mensaje = "";
-  login.querySelectorAll("input").forEach((input) => {
+  let mensajes = [];
+  persona.querySelectorAll("input").forEach((input) => {
     let error = false;
     let tempMsj = "";
 
@@ -454,7 +509,11 @@ function crearUsuario() {
 
     if (error) {
       input.value = "";
-      mensaje += `<p class="p-error">[ERROR] - ${tempMsj}</p>`;
+      const error = document.createElement("p");
+      error.textContent = `[ERROR] - ${tempMsj}`;
+      error.classList.add("p-error");
+      mensajes.push(error);
+
       input.className = "input-error";
       ultimatum = false;
     } else {
@@ -463,14 +522,171 @@ function crearUsuario() {
   });
 
   if (ultimatum) {
-    const correo = login.correo.value;
-    const nombre = login.nombre.value;
-    const altura = login.altura.value;
-    const peso = login.peso.value;
-    const fechaNacimiento = new Date(login.fecha_nacimiento.value);
-    persona1 = new Persona(nombre, correo, altura, peso, fechaNacimiento);
+    const correo = persona.correo.value;
+    const nombre = persona.nombre.value;
+    const altura = persona.altura.value;
+    const peso = persona.peso.value;
+    const fechaNacimiento = new Date(persona.fecha_nacimiento.value);
+    usuario = new Persona(
+      localStorage.usuario,
+      localStorage.password,
+      nombre,
+      correo,
+      altura,
+      peso,
+      fechaNacimiento
+    );
+    localStorage.sesion = true;
+    localStorage.correo = correo;
+    localStorage.nombre = nombre;
+    localStorage.altura = altura;
+    localStorage.peso = peso;
+    localStorage.fechaNacimiento = persona.fecha_nacimiento.value;
   } else {
-    showInner(mensaje, false);
+    showInner(mensajes, false);
+  }
+  return ultimatum;
+}
+
+/**
+ * Se basa en la logica de crearPersona(), pero al haber campos que terminan compartiendo valor debo compararlos juntos y no se puede desde el foreach
+ * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
+ */
+function crearEntrenamiento() {
+  const entrenamiento = document.getElementById("añadirEntrenamiento");
+
+  let mensajes = [];
+  let ultimatum = true;
+  entrenamiento.querySelectorAll("input").forEach((input) => {
+    let error = false;
+    let tempMsj = "";
+
+    switch (input.id) {
+      case "distanciaInput":
+        error = input.value < 0 || input.value == null || input.value == "";
+        tempMsj = "Introduce un valor valido en " + input.id;
+        break;
+      case "fechaEntrenamiento":
+        error =
+          input.value == "" ||
+          input.value == null ||
+          new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
+        tempMsj = "Introduce una fecha valida";
+        break;
+      default:
+        break;
+    }
+    if (error) {
+      input.value = "";
+      const error = document.createElement("p");
+      error.textContent = `[ERROR] - ${tempMsj}`;
+      error.classList.add("p-error");
+      mensajes.push(error);
+
+      input.className = "input-error";
+      ultimatum = false;
+    } else {
+      input.className = "input-normal";
+    }
+  });
+
+  const distancia = Number(entrenamiento.distanciaInput.value);
+  const horas = Number(entrenamiento.horas.value);
+  const minutos = Number(entrenamiento.minutos.value);
+  const tiempo = horas * 60 + minutos; //* min
+
+  //* Para controlar el tiempo, por si los dos tienen valor 0 o negativo.
+  if (tiempo <= 0) {
+    const errorTiempo = document.createElement("p");
+    errorTiempo.textContent = `[ERROR] - Introdocude un tiempo valido`;
+    errorTiempo.classList.add("p-error");
+    mensajes.push(errorTiempo);
+
+    entrenamiento.horas.className = "input-error";
+    entrenamiento.minutos.className = "input-error";
+    ultimatum = false;
+  }
+
+  //* Para controlar el tipo, por si no hay.
+  const tipo = tipoActividad.value;
+  if (tipo == "" || tipo == null) {
+    const errorTipo = document.createElement("p");
+    errorTipo.textContent = `[ERROR] - Introdocude el tipo de entrenamiento`;
+    errorTipo.classList.add("p-error");
+    mensajes.push(errorTipo);
+
+    entrenamiento.tipoActividad.className = "input-error";
+    ultimatum = false;
+  } else {
+    entrenamiento.tipoActividad.className = "input-normal";
+  }
+
+  const fecha = new Date(entrenamiento.fechaEntrenamiento.value);
+
+  if (ultimatum) {
+    usuario.añadirEntrenamiento(
+      new Entrenamiento(usuario.nextId(), distancia, tiempo, tipo, fecha)
+    );
+
+    let p = document.createElement("p");
+    p.classList.add("p-exito");
+    p.textContent = `Entrenamiento ${
+      usuario.getEntrenamientos().length
+    }º creado (pulsa Mostrar entrenamientos para ver tus entrenamientos)`;
+
+    showInner([p], false);
+  } else {
+    showInner(mensajes, false);
+  }
+  console.log(usuario);
+}
+
+/*
+  Comoparte la logica de crearPersona(), pero para crear los datos de la cuenta
+*/
+function crearUsuario() {
+  const login = document.getElementById("form_registro");
+
+  let ultimatum = true;
+  let mensajes = [];
+  login.querySelectorAll("input").forEach((input) => {
+    let error = false;
+    let tempMsj = "";
+
+    switch (input.id) {
+      case "usuario":
+        error = !comprobarRegex(/^[\w]{3,}$/, input.value);
+        tempMsj = "Debe contener el nombre de usuario al menos 3 caracteres";
+        break;
+      case "password":
+        error = !comprobarRegex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
+          input.value
+        );
+        tempMsj =
+          "Debe contener al menos 8 caracteres con una minuscula, una mayuscula y un número ";
+        break;
+    }
+
+    if (error) {
+      input.value = "";
+      const error = document.createElement("p");
+      error.textContent = `[ERROR] - ${tempMsj}`;
+      error.classList.add("p-error");
+      mensajes.push(error);
+
+      input.className = "input-error";
+      ultimatum = false;
+    } else {
+      input.className = "input-normal";
+    }
+  });
+
+  if (ultimatum) {
+    localStorage.usuario = login.usuario.value;
+    localStorage.password = login.password.value;
+  } else {
+    showInner(mensajes, false);
   }
   return ultimatum;
 }
@@ -505,31 +721,47 @@ function ahoraDatetimeLocal() {
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
 function mostrarEntrenamientos() {
-  let contenido = "<h2>Entrenamientos</h2>";
+  const titulo = document.createElement("h2");
+  titulo.textContent = "Entrenamientos";
 
-  if (persona1.getEntrenamientos().length == 0) {
-    contenido += `No hay entrenamientos`;
+  if (usuario.getEntrenamientos().length == 0) {
+    const texto = document.createElement("p");
+    texto.textContent = "No hay entrenamientos";
+
+    return (contenido = [titulo, texto]);
   } else {
-    contenido = `
-<table border="1" style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <th>Tipo</th>
-        <th>Distancia (m)</th>
-        <th>Tiempo</th>
-        <th>Velocidad (km/h)</th>
-        <th>Fecha</th>
-        <th>Nivel</th>
-    </tr>
-`;
+    let table = createTable();
 
-    persona1.getEntrenamientos().forEach((entrenamiento) => {
-      contenido += entrenamiento.mostrarInfo(); // ya devuelve <tr> completo
+    usuario.getEntrenamientos().forEach((entrenamiento) => {
+      table.appendChild(entrenamiento.mostrarInfo()); // ya devuelve <tr> completo
     });
-
-    contenido += "</table>";
+    return (contenido = [titulo, table]);
   }
+}
 
-  return contenido;
+// Metodo para crear la tabla para listar los entrenamientos
+function createTable() {
+  const table = document.createElement("table");
+  const trTitulos = document.createElement("tr");
+
+  const headers = [
+    "Tipo",
+    "Distancia (m)",
+    "Tiempo",
+    "Velocidad (km/h)",
+    "Fecha",
+    "Nivel",
+    "Acciones",
+  ];
+
+  headers.forEach((text) => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    trTitulos.appendChild(th);
+  });
+
+  table.appendChild(trTitulos);
+  return table;
 }
 
 /**
@@ -539,14 +771,18 @@ function mostrarEntrenamientos() {
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
 function mejoresEntrenamientos(valor) {
-  let contenido = `<h2>Mejor entrenamiento ${valor}</h2>`;
+  const titulo = document.createElement("h2");
+  titulo.textContent = `Mejor entrenamiento ${valor}`;
 
-  if (persona1.getEntrenamientos().length == 0) {
-    contenido += `No hay entrenamientos`;
+  if (usuario.getEntrenamientos().length == 0) {
+    const texto = document.createElement("p");
+    texto.textContent = "No hay entrenamientos";
+
+    return (contenido = [titulo, texto]);
   } else {
-    let mejorMarca = persona1.getEntrenamientos()[0];
+    let mejorMarca = usuario.getEntrenamientos()[0];
 
-    persona1.getEntrenamientos().forEach((entrenamientos) => {
+    usuario.getEntrenamientos().forEach((entrenamientos) => {
       switch (valor) {
         case "tiempo":
           if (entrenamientos.getTiempo() > mejorMarca) {
@@ -568,23 +804,12 @@ function mejoresEntrenamientos(valor) {
       }
     });
 
-    contenido += `
-<table border="1" style="border-collapse: collapse; width: 100%;">
-    <tr>
-        <th>Tipo</th>
-        <th>Distancia (m)</th>
-        <th>Tiempo</th>
-        <th>Velocidad (km/h)</th>
-        <th>Fecha</th>
-        <th>Nivel</th>
-    </tr>
-`;
+    let table = createTable();
 
-    contenido += mejorMarca.mostrarInfo();
-    contenido += "</table>";
+    table.appendChild(mejorMarca.mostrarInfo());
+
+    return (contenido = [titulo, table]);
   }
-
-  return contenido;
 }
 
 /**
@@ -596,14 +821,18 @@ function mejoresEntrenamientos(valor) {
  */
 
 function totales(valor) {
-  let contenido = `<h2>Total ${valor}</h2>`;
+  const titulo = document.createElement("h2");
+  titulo.textContent = `Total ${valor}`;
 
-  if (persona1.getEntrenamientos().length == 0) {
-    contenido += `No hay entrenamientos`;
+  if (usuario.getEntrenamientos().length == 0) {
+    const texto = document.createElement("p");
+    texto.textContent = "No hay entrenamientos";
+
+    return (contenido = [titulo, texto]);
   } else {
     let total = 0;
 
-    persona1.getEntrenamientos().forEach((entrenamientos) => {
+    usuario.getEntrenamientos().forEach((entrenamientos) => {
       switch (valor) {
         case "tiempo":
           total += entrenamientos.getTiempo();
@@ -617,46 +846,47 @@ function totales(valor) {
       }
     });
 
+    let texto;
+
     switch (valor) {
       case "tiempo":
-        contenido += "Total min entrenando: " + total + " min";
+        texto = document.createElement("p");
+        texto.textContent = `Total min entrenando: ${total} min`;
         break;
       case "distancia":
-        contenido += "Total km recorridos: " + total + " km";
+        texto = document.createElement("p");
+        texto.textContent = `Total min entrenando: ${total} min`;
         break;
       default:
         break;
     }
+    return (contenido = [titulo, texto]);
   }
-
-  return contenido;
 }
 
 /**
- * ? Mejorable
  * Esta función muestra y oculta la sección de iniciar sesión del resto de formularios de la app
- * Inprimiendo @persona1 a traves de mostrarPersona()
+ * Inprimiendo @usuario a traves de mostrarPersona()
  */
 function crearIndex() {
-  document.getElementById("login").style.display = "none";
-  document.getElementById("div_login").style.display = "none";
+  inicio.classList.add("oculto");
+  div_login.classList.add("oculto");
 
-  document.getElementById("btn").style.display = "block";
-  document.getElementById("perfil").style.display = "block";
-  document.getElementById("formularios_btn").style.display = "block";
-  document.getElementById("resultados").style.display = "none";
+  btn.classList.remove("oculto");
+  perfil.classList.remove("oculto");
+  formularios_btn.classList.remove("oculto");
+  resultados.classList.add("oculto");
 
   mostrarPersona();
 }
 
 /**
- * ? Mejorable
- * Esta función inprime los datos de @persona1 con innerHTML en el [p id=datosPerfil] tras la configuración de crearIndex()
+ * Esta función inprime los datos de @usuario con innerHTML en el [p id=datosPerfil] tras la configuración de crearIndex()
  */
 function mostrarPersona() {
   const p = document.getElementById("datosPerfil");
 
-  p.innerHTML = persona1.mostrarInfo();
+  p.textContent = usuario.mostrarInfo();
 }
 
 /**
@@ -681,11 +911,100 @@ function imgs() {
   }, 50000);
 }
 
+// Crea un popup que añade al html
+function createPopup() {
+  let popup = document.createElement("div");
+  popup.classList.add("popup");
+
+  let equis = document.createElement("i");
+  equis.classList.add("fa-solid");
+  equis.classList.add("fa-xmark");
+
+  let cerrar = document.createElement("span");
+  cerrar.classList.add("cerrar");
+  cerrar.appendChild(equis);
+
+  let titulo = document.createElement("h2");
+  titulo.textContent = "Bienvenido🙋";
+
+  let contenido = document.createElement("p");
+  contenido.textContent = "Bienvenido al nuevo FITNESS APP :D";
+
+  popup.appendChild(cerrar);
+  popup.appendChild(titulo);
+  popup.appendChild(contenido);
+
+  document.body.appendChild(popup);
+}
+
+/**
+ * Añade las publicaciones al foro de la web, el nickName se usa de forma predeterminado el introducido como usuario,
+ * pero como se solicitaba en la practica añadir un campo para nick, este se puede modificar
+ */
+function publicarPost() {
+  const textarea = document.getElementById("opinion");
+  const nick = document.getElementById("nick");
+  let nickName = localStorage.usuario;
+
+  if (textarea.value == "") {
+    textarea.placeholder = "[ERROR] - No hay contenido en el post";
+    textarea.classList.add("input-error");
+    return;
+  } else {
+    textarea.placeholder = "Opinion..";
+    textarea.classList.remove("input-error");
+  }
+
+  if (nick.value != "") {
+    nickName = nick.value;
+  }
+
+  const divNode = document.createElement("div");
+  divNode.classList.add("post");
+
+  const userPost = document.createElement("p");
+  userPost.classList.add("user");
+  userPost.textContent = nickName + " • " + new Date().toLocaleString();
+
+  const textoPost = document.createElement("p");
+  textoPost.classList.add("texto");
+  textoPost.textContent = textarea.value;
+
+  divNode.appendChild(userPost);
+  divNode.appendChild(textoPost);
+
+  const foroDiv = document.getElementById("foro");
+  foroDiv.insertBefore(divNode, foroDiv.children[0]);
+
+  textarea.value = "";
+}
+
+/**
+ * Hace toggle entre el tema oscuro y los logos del button, guarda la ultima acción en localStorage
+ */
+function addDarkTheme() {
+  let dark = document.body.classList.toggle("dark");
+
+  let btn = document.getElementById("toggleTheme").children[0];
+  btn.classList.toggle("fa-moon");
+  btn.classList.toggle("fa-sun");
+
+  localStorage.darkTheme = dark;
+}
+
 //* Cuando inicia la web se ejecutan los metodos con permanentes
 window.onload = () => {
-  imgs();
+  if (localStorage.darkTheme === "true") {
+    addDarkTheme();
+  }
+  if (localStorage?.sesion) {
+    document.getElementById("mostrarForm").innerHTML = "Iniciar";
+  } else {
+    createPopup();
+  }
   listeners();
+  imgs();
 };
 
-//* Variable donde se construye al usuario
-let persona1;
+//* Variable donde se registran todos los usuarios
+let usuario;
