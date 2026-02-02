@@ -185,7 +185,7 @@ class Entrenamiento {
       //const td = document.createElement("td");
       //td.innerHTML = elemento;
       //tr.appendChild(td);
-      const td = $("<td>").html(elemento).append(td);
+      tr.append($("<td>").html(elemento));
     });
 
     //const td = document.createElement("td");
@@ -209,7 +209,8 @@ class Entrenamiento {
  */
 function listeners() {
   //* Muestra el form de crear usuario tras pulsar Iniciar sesión
-  document.getElementById("mostrarForm").addEventListener("click", () => {
+  //document.getElementById("mostrarForm").addEventListener("click", () => {
+  $("#mostrarForm").click(() => {
     if (localStorage?.sesion) {
       const nomUsuario = localStorage.usuario;
       const password = localStorage.password;
@@ -236,51 +237,55 @@ function listeners() {
   });
 
   //* Muestra el form de añadir entrenamiento
-  document
-    .getElementById("mostrarAñadirEntrenamiento")
-    .addEventListener("click", () => show("añadirEntrenamiento"));
+  //document.getElementById("mostrarAñadirEntrenamiento").addEventListener("click", () => show("añadirEntrenamiento"));
+  $("#mostrarAñadirEntrenamiento").click(() => show("añadirEntrenamiento"));
 
   //* Muestra el form de radio para calcular los totales
-  document.getElementById("mostrarTotales").addEventListener("click", () => {
+  //document.getElementById("mostrarTotales").addEventListener("click", () => {
+  $("#mostrarTotales").click(() => {
     show("totales");
   });
+  //TODO: JQuery
   //* Muestra el form de radio para calcular los totales
-  document.getElementById("mostrarForo").addEventListener("click", () => {
+  //document.getElementById("mostrarForo").addEventListener("click", () => {
+  $("#mostrarForo").click(() => {
     show("foro_form");
     show("foro", false);
-    //TODO: JQuery
-    document.getElementById("nick").placeholder =
-      "Nick de usuario: " + localStorage.usuario;
+    //document.getElementById("nick").placeholder = "Nick de usuario: " + localStorage.usuario;
+    $("#nick").attr("placeholder", "Nick de usuario: " + localStorage.usuario);
   });
 
   //* Muestra todos los entrenamientos listados
-  document
-    .getElementById("mostrarEntrenamientos")
-    .addEventListener("click", () => {
-      showInner(mostrarEntrenamientos());
+  //TODO: JQuery
+  //document.getElementById("mostrarEntrenamientos").addEventListener("click", () => {
+  $("#mostrarEntrenamientos").click(function () {
+    showInner(mostrarEntrenamientos());
 
-      const borrarBtn = document.querySelectorAll(".eliminar");
-      
-      //TODO: JQuery
-      borrarBtn.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const tr = $(this).closest("tr");
-          const id = tr.dataset.id;
+    //const borrarBtn = document.querySelectorAll(".eliminar");
+    const borrarBtn = $(".eliminar");
 
-          usuario.eliminarEntrenamiento(id);
+    //borrarBtn.forEach((btn) => {
+    borrarBtn.each(function (btn) {
+      //btn.addEventListener("click", function () {
+      btn.click(function () {
+        const tr = $(this).closest("tr");
+        //const id = tr.dataset.id;
+        const id = tr.attr("data-id");
 
-          tr.remove();
-        });
+        usuario.eliminarEntrenamiento(id);
+
+        tr.remove();
       });
     });
+  });
 
   //* Muestra form Mejor Entrenamiento
-  document
-    .getElementById("mostrarMejorEntrenamiento")
-    .addEventListener("click", () => {
-      show("mejorEntrenamiento");
-    });
+  //document.getElementById("mostrarMejorEntrenamiento").addEventListener("click", () => {show("mejorEntrenamiento");});
+  $("#mostrarMejorEntrenamiento").click(() => {
+    show("mejorEntrenamiento");
+  });
 
+  //TODO: JQuery
   //* Control radio de los mejores entrenamientos
   document
     .getElementById("mejorEntrenamiento")
@@ -305,8 +310,10 @@ function listeners() {
       showInner(contenido, false);
     });
 
+  //TODO: JQuery
   //* Control radio de los totales
-  document.getElementById("totales").addEventListener("change", (e) => {
+  //document.getElementById("totales").addEventListener("change", (e) => {
+  $("#totales").on("change", function (e) {
     let contenido;
 
     contenido = totales(e.target.value);
@@ -315,12 +322,12 @@ function listeners() {
   });
 
   //* Añadir entrenamiento
-  document
-    .getElementById("crearEntrenamiento")
-    .addEventListener("click", crearEntrenamiento);
+  //document.getElementById("crearEntrenamiento").addEventListener("click", crearEntrenamiento);
+  $("#crearEntrenamiento").click(crearEntrenamiento);
 
   //* Crear Persona
-  document.getElementById("crearPersona").addEventListener("click", () => {
+  //document.getElementById("crearPersona").addEventListener("click", () => {
+  $("#crearPersona").click(function () {
     //* Si es true, se cambian los display de los formularios
 
     //TODO: JQuery
@@ -331,13 +338,14 @@ function listeners() {
     }
   });
   //* Crear usuario
-  document.getElementById("crearUsuario").addEventListener("click", () => {
+  //document.getElementById("crearUsuario").addEventListener("click", () => {
+  $("#crearUsuario").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery
+    //TODO: JQuery do
     if (crearUsuario()) {
       hider("form_persona");
-      
+
       //registrar.classList.add("oculto");
       //inicio.classList.add("oculto");
       //div_login.classList.remove("oculto");
@@ -401,7 +409,7 @@ function listeners() {
 
   En este caso se elimina el padre de el span, es decir el div que conforma el popup
   */
-  //TODO: JQuery
+  //TODO: JQuery do
   //document.querySelector(".cerrar")?.addEventListener("click", function () {
   //  this.parentElement.remove();
   //});
@@ -410,20 +418,19 @@ function listeners() {
   });
 
   //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
-  document.getElementById("cerrarSesion").addEventListener("click", () => {
+  //document.getElementById("cerrarSesion").addEventListener("click", () => {
+  $("#cerrarSesion").click(function () {
     localStorage.clear();
     location.reload();
   });
 
   //* Cambia el tema entre oscuro y blanco
-  document
-    .getElementById("toggleTheme")
-    .addEventListener("click", addDarkTheme);
+  //document.getElementById("toggleTheme").addEventListener("click", addDarkTheme);
+  $("#toggleTheme").click(addDarkTheme);
 
   //* Añade publicaciones al foro
-  document
-    .getElementById("publicarPost")
-    .addEventListener("click", publicarPost);
+  //document.getElementById("publicarPost").addEventListener("click", publicarPost);
+  $("#publicarPost").click(publicarPost);
 }
 
 /**
@@ -468,7 +475,7 @@ function show(id, hide = true) {
 function showInner(contenido, hide = true) {
   //const resultadoInner = document.getElementById("resultados");
   //resultadoInner.innerHTML = "";
-  const resultadoInner = $("#resultados")
+  const resultadoInner = $("#resultados");
   resultadoInner.text("");
   if (hide) {
     hider();
@@ -494,7 +501,7 @@ function hider(id = null) {
   //const resultadoInner = document.getElementById("resultados");
   //resultados.classList.add("oculto");
   //resultadoInner.innerHTML = "";
-  $("#resultados").addClass("oculto").text("")
+  $("#resultados").addClass("oculto").text("");
 
   //const forms = document.querySelectorAll("form");
   //forms.forEach((form) => {
@@ -503,13 +510,12 @@ function hider(id = null) {
   //  }
   //});
 
-  $("form").each(function(){
+  $("form").each(function () {
     //TODO?: JQuery
-      if (id != this.id) {
-        $(this).addClass("oculto")
-      }
+    if (id != this.id) {
+      $(this).addClass("oculto");
+    }
   });
-
 }
 
 /**
@@ -526,11 +532,11 @@ function hider(id = null) {
 //TODO: JQuery do
 function crearPersona() {
   //const persona = document.getElementById("form_persona");
-  
+
   let ultimatum = true;
   let mensajes = [];
   //persona.querySelectorAll("input").forEach((input) => {
-  $("#form_persona input").each(function(){
+  $("#form_persona input").each(function () {
     let error = false;
     let tempMsj = "";
 
@@ -595,7 +601,9 @@ function crearPersona() {
     const nombre = $("#form_persona #nombre").val();
     const altura = $("#form_persona #altura").val();
     const peso = $("#form_persona #peso").val();
-    const fechaNacimiento = new Date($("#form_persona #fecha_nacimiento").val());
+    const fechaNacimiento = new Date(
+      $("#form_persona #fecha_nacimiento").val(),
+    );
     usuario = new Persona(
       localStorage.usuario,
       localStorage.password,
@@ -638,7 +646,8 @@ function crearEntrenamiento() {
       case "distanciaInput":
         //error = input.value < 0 || input.value == null || input.value == "";
         //tempMsj = "Introduce un valor valido en " + input.id;
-        error = $(this).val() < 0 || $(this).val() == null || $(this).val() == "";
+        error =
+          $(this).val() < 0 || $(this).val() == null || $(this).val() == "";
         tempMsj = "Introduce un valor valido en " + $(this).val();
         break;
       case "fechaEntrenamiento":
@@ -782,7 +791,9 @@ function crearUsuario() {
       //const error = document.createElement("p");
       //error.textContent = `[ERROR] - ${tempMsj}`;
       //error.classList.add("p-error");
-      const errorPush = $("<p>").text(`[ERROR] - ${tempMsj}`).addClass("p-error");
+      const errorPush = $("<p>")
+        .text(`[ERROR] - ${tempMsj}`)
+        .addClass("p-error");
       mensajes.push(errorPush);
 
       //input.className = "input-error";
