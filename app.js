@@ -428,6 +428,21 @@ function listeners() {
   //* Añade publicaciones al foro
   //document.getElementById("publicarPost").addEventListener("click", publicarPost);
   $("#publicarPost").click(publicarPost);
+
+  //* Hace visible las flechas del carrusel
+  $(".f-button, .is-arraw").on({
+    mouseenter: function () {
+      $(this).css("opacity", "100%", "!important");
+    },
+    mouseleave: function () {
+      $(this).css("opacity", "0%", "!important");
+    },
+  });
+
+  $(".me > .btn").click(function () {
+    $("div.msg").toggleClass("hide");
+    $(this).toggleClass("msgTop");
+  });
 }
 
 /**
@@ -499,14 +514,16 @@ function hider(id = null) {
   //resultados.classList.add("oculto");
   //resultadoInner.innerHTML = "";
   $("#resultados").addClass("oculto").text("");
-  
+
   //const forms = document.querySelectorAll("form");
   //forms.forEach((form) => {
   //  if (id != form.id) {
   //    form.classList.add("oculto");
   //  }
   //});
-  $("form").not("#" + id).addClass("oculto");
+  $("form")
+    .not("#" + id)
+    .addClass("oculto");
 }
 
 /**
@@ -1065,7 +1082,7 @@ function imgs() {
 function createPopup() {
   //let popup = document.createElement("div");
   //popup.classList.add("popup");
-  const popup = $("<div>").addClass("popup");
+  const popup = $("<div>").addClass("popup item");
 
   //let equis = document.createElement("i");
   //equis.classList.add("fa-solid");
@@ -1174,8 +1191,28 @@ function addDarkTheme() {
   localStorage.darkTheme = dark;
 }
 
+function carruselImagenes() {
+  Carousel(
+    document.getElementById("myCarousel"),
+    {
+      pauseOnHover: true,
+      Autoplay: {
+        timeout: 10000,
+      },
+    },
+    {
+      Arrows,
+      Autoplay,
+    },
+  ).init();
+
+  Fancybox.bind("[data-fancybox]");
+}
+
 //* Cuando inicia la web se ejecutan los metodos con permanentes
-window.onload = () => {
+$(document).ready(function () {
+  carruselImagenes();
+
   if (localStorage.darkTheme === "true") {
     addDarkTheme();
   }
@@ -1184,11 +1221,11 @@ window.onload = () => {
     //document.getElementById("mostrarForm").innerHTML = "Iniciar";
     $("#mostrarForm").text("Iniciar");
   } else {
-    createPopup();
+    //!createPopup();
   }
   listeners();
-  imgs();
-};
+  //!imgs();
+});
 
 //* Variable donde se registran todos los usuarios
 let usuario;

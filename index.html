@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -12,73 +12,147 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+        <!-- Add jQuery library -->
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-latest.min.js"
+    ></script>
+    <!-- Add fancybox-->
+        <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.lazyload.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.arrows.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.thumbs.css"
+    />
   </head>
 
   <body>
-    <button id="toggleTheme">
-      <i class="fa-solid fa-sun"></i>
-    </button>
-    <div>
+    <div id="btn-top">
+      <button class="btn" id="toggleTheme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+      <div class="me">
+        <button class="btn">
+          <span>Rafel Moreno</span>
+        </button>
+        <div class="msg item hide">
+          <span>Hola, yo hice la web 🙆‍♂️</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
       <h1>JQ-Fitness app</h1>
     </div>
 
-    <div>
-      <img src="" alt="Imagen de cabecera de Fitness App" height="300" />
+    <div class="item imagenes">
+      <div class="f-carousel galeria" id="myCarousel">
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img1.png"
+        >
+          <a href="imgs/img1.png" rel="galeria" title="Entrenamiento asistido">
+            <img src="imgs/img1.png" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img2.webp"
+        >
+          <a href="imgs/img2.webp" rel="galeria" title="Controla tus entrenamientos">
+            <img src="imgs/img2.webp" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img3.jpg"
+        >
+          <a href="imgs/img3.jpg" rel="galeria" title="Registra el tiempo de tu entrenamiento">
+            <img src="imgs/img3.jpg" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img4.jpg"
+        >
+          <a href="imgs/img4.jpg" rel="galeria" title="Observa el desarrollo de tus capazidades">
+            <img src="imgs/img4.jpg" alt=""
+          /></a>
+        </div>
+      </div>
     </div>
 
-    <div id="inicio" class="inicio">
-      <button id="mostrarForm" type="button">Registrarse</button>
+    <div id="inicio" class="inicio item">
+      <button class="btn" id="mostrarForm" type="button">Registrarse</button>
     </div>
 
-    <div id="registrar" class="registrar oculto">
+    <div id="registrar" class="registrar item oculto">
       <form id="form_registro">
         <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" value="Pepe"/>
+        <input type="text" id="usuario" value="Pepe" />
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" value="PepePaasword123465"/>
+        <input type="password" id="password" value="PepePaasword123465" />
         <input type="button" id="crearUsuario" value="Enviar" />
       </form>
     </div>
 
-    <div id="div_login" class="login oculto">
+    <div id="div_login" class="login item oculto">
       <form id="form_persona">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" value="Pepe"/>
+        <input type="text" id="nombre" value="Pepe" />
 
         <label for="correo">Correo:</label>
-        <input type="email" id="correo" value="pepe@correo.es"/>
+        <input type="email" id="correo" value="pepe@correo.es" />
 
         <label for="altura">Altura(cm):</label>
-        <input type="number" id="altura" value="10"/>
+        <input type="number" id="altura" value="10" />
 
         <label for="peso">Peso(kg):</label>
-        <input type="number" id="peso" value="10"/>
+        <input type="number" id="peso" value="10" />
 
         <label for="fecha_nacimiento">Fecha nacimiento:</label>
-        <input type="date" id="fecha_nacimiento" value="11-11-1111"/>
+        <input type="date" id="fecha_nacimiento" value="11-11-1111" />
 
         <input type="button" id="crearPersona" value="Crear" />
       </form>
     </div>
 
-    <div id="perfil" class="oculto">
+    <div id="perfil" class="item oculto">
       <h3>Usuario</h3>
       <p id="datosPerfil"></p>
     </div>
 
-    <div id="btn" class="oculto">
-      <button id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
-      <button id="mostrarEntrenamientos">Mostrar entrenamientos</button>
-      <button id="mostrarMejorEntrenamiento">
+    <div id="btn" class="item oculto">
+      <button class="btn" id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
+      <button class="btn" id="mostrarEntrenamientos">Mostrar entrenamientos</button>
+      <button class="btn" id="mostrarMejorEntrenamiento">
         Mostrar mejor entrenamiento
       </button>
-      <button id="mostrarTotales">Mostrar totales</button>
-      <button id="mostrarForo">Foro</button>
-      <button id="cerrarSesion">Cerrar sesión</button>
+      <button class="btn" id="mostrarTotales">Mostrar totales</button>
+      <button class="btn" id="mostrarForo">Foro</button>
+      <button class="btn" id="cerrarSesion">Cerrar sesión</button>
     </div>
 
     <section id="contenido">
-      <div id="formularios_btn" class="oculto">
+      <div id="formularios_btn" class="item oculto">
         <form id="añadirEntrenamiento" class="oculto">
           <label for="distanciaInput">Distancia(m):</label>
           <input type="number" id="distanciaInput" />
@@ -161,9 +235,14 @@
           <input type="button" id="publicarPost" value="Publicar" />
         </form>
       </div>
-      <div id="resultados" class="oculto"></div>
-      <div id="foro" class="oculto"></div>
+      <div id="resultados" class="oculto item"></div>
+      <div id="foro" class="oculto item"></div>
     </section>
     <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.lazyload.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.arrows.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.thumbs.umd.js"></script>
   </body>
 </html>
