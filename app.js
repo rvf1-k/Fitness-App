@@ -1,6 +1,3 @@
-//TODO: Ver parametros hide() y show()
-//TODO: Ver parametros remove()
-
 class Usuario {
   constructor(usuario, password) {
     this.usuario = usuario;
@@ -245,7 +242,7 @@ function listeners() {
   $("#mostrarTotales").click(() => {
     show("totales");
   });
-  //TODO: JQuery
+  //TODO: JQuery do
   //* Muestra el form de radio para calcular los totales
   //document.getElementById("mostrarForo").addEventListener("click", () => {
   $("#mostrarForo").click(() => {
@@ -256,7 +253,7 @@ function listeners() {
   });
 
   //* Muestra todos los entrenamientos listados
-  //TODO: JQuery
+  //TODO: JQuery do
   //document.getElementById("mostrarEntrenamientos").addEventListener("click", () => {
   $("#mostrarEntrenamientos").click(function () {
     showInner(mostrarEntrenamientos());
@@ -285,7 +282,7 @@ function listeners() {
     show("mejorEntrenamiento");
   });
 
-  //TODO: JQuery
+  //TODO: JQuery do
   //* Control radio de los mejores entrenamientos
   document
     .getElementById("mejorEntrenamiento")
@@ -310,7 +307,7 @@ function listeners() {
       showInner(contenido, false);
     });
 
-  //TODO: JQuery
+  //TODO: JQuery do
   //* Control radio de los totales
   //document.getElementById("totales").addEventListener("change", (e) => {
   $("#totales").on("change", function (e) {
@@ -330,7 +327,7 @@ function listeners() {
   $("#crearPersona").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery
+    //TODO: JQuery do
     if (crearPersona()) {
       //div_login.classList.remove("oculto");
       $("div_login").removeClass("oculto");
@@ -448,7 +445,7 @@ function show(id, hide = true) {
 
   //const elemento = document.getElementById(id);
   //elemento.classList.remove("oculto");
-  const elemento = $(`#${id}`).removeClass("oculto");
+  $(`#${id}`).removeClass("oculto");
 
   switch (id) {
     case "añadirEntrenamiento":
@@ -502,20 +499,14 @@ function hider(id = null) {
   //resultados.classList.add("oculto");
   //resultadoInner.innerHTML = "";
   $("#resultados").addClass("oculto").text("");
-
+  
   //const forms = document.querySelectorAll("form");
   //forms.forEach((form) => {
   //  if (id != form.id) {
   //    form.classList.add("oculto");
   //  }
   //});
-
-  $("form").each(function () {
-    //TODO?: JQuery
-    if (id != this.id) {
-      $(this).addClass("oculto");
-    }
-  });
+  $("form").not("#" + id).addClass("oculto");
 }
 
 /**
