@@ -1,3 +1,6 @@
+//Todo: Warning de cerrar sesion
+//TODO: Anim
+
 class Usuario {
   constructor(usuario, password) {
     this.usuario = usuario;
@@ -259,20 +262,16 @@ function listeners() {
     showInner(mostrarEntrenamientos());
 
     //const borrarBtn = document.querySelectorAll(".eliminar");
-    const borrarBtn = $(".eliminar");
-
     //borrarBtn.forEach((btn) => {
-    borrarBtn.each(function (btn) {
+    $(".eliminar").click(function () {
       //btn.addEventListener("click", function () {
-      btn.click(function () {
-        const tr = $(this).closest("tr");
-        //const id = tr.dataset.id;
-        const id = tr.attr("data-id");
+      const tr = $(this).closest("tr");
+      //const id = tr.dataset.id;
+      const id = tr.attr("data-id");
 
-        usuario.eliminarEntrenamiento(id);
+      usuario.eliminarEntrenamiento(id);
 
-        tr.remove();
-      });
+      tr.remove();
     });
   });
 
@@ -284,28 +283,27 @@ function listeners() {
 
   //TODO: JQuery do
   //* Control radio de los mejores entrenamientos
-  document
-    .getElementById("mejorEntrenamiento")
-    .addEventListener("change", (e) => {
-      let contenido;
+  //document.getElementById("mejorEntrenamiento").addEventListener("change", (e) => {
+  $("#mejorEntrenamiento").on("change", (e) => {
+    let contenido;
 
-      switch (e.target.value) {
-        case "distancia":
-          contenido = mejoresEntrenamientos("distancia");
-          break;
-        case "tiempo":
-          contenido = mejoresEntrenamientos("tiempo");
-          break;
-        case "velocidad":
-          contenido = mejoresEntrenamientos("velocidad");
-          break;
-        default:
-          contenido = ""; //Por toleración de errores
-          break;
-      }
+    switch (e.target.value) {
+      case "distancia":
+        contenido = mejoresEntrenamientos("distancia");
+        break;
+      case "tiempo":
+        contenido = mejoresEntrenamientos("tiempo");
+        break;
+      case "velocidad":
+        contenido = mejoresEntrenamientos("velocidad");
+        break;
+      default:
+        contenido = ""; //Por toleración de errores
+        break;
+    }
 
-      showInner(contenido, false);
-    });
+    showInner(contenido, false);
+  });
 
   //TODO: JQuery do
   //* Control radio de los totales
