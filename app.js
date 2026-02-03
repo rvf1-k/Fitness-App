@@ -13,7 +13,7 @@ class Persona extends Usuario {
     correo,
     altura,
     peso,
-    fechaNacimiento
+    fechaNacimiento,
   ) {
     super(usuario, password);
     this.nombre = nombre;
@@ -165,7 +165,7 @@ class Entrenamiento {
   }
 
   mostrarInfo() {
-    const tr = document.createElement("tr");
+    const tr = $("<tr>");
 
     const content = [
       this.tipoHtml(),
@@ -177,17 +177,15 @@ class Entrenamiento {
     ];
 
     content.forEach((elemento) => {
-      const td = document.createElement("td");
-      td.innerHTML = elemento;
-      tr.appendChild(td);
+      tr.append($("<td>").html(elemento));
     });
 
-    const td = document.createElement("td");
-    td.innerHTML =
-      '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>';
+    const td = $("<td>").html(
+      '<button class="eliminar btn" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
+    );
 
-    tr.appendChild(td);
-    tr.dataset.id = this.id;
+    tr.append(td);
+    tr.attr("data-id", this.id);
 
     return tr;
   }
@@ -198,7 +196,7 @@ class Entrenamiento {
  */
 function listeners() {
   //* Muestra el form de crear usuario tras pulsar Iniciar sesión
-  document.getElementById("mostrarForm").addEventListener("click", () => {
+  $("#mostrarForm").click(() => {
     if (localStorage?.sesion) {
       const nomUsuario = localStorage.usuario;
       const password = localStorage.password;
@@ -214,83 +212,72 @@ function listeners() {
         correo,
         altura,
         peso,
-        fechaNacimiento
+        fechaNacimiento,
       );
       crearIndex();
     } else {
-      registrar.classList.remove("oculto");
+      $("#registrar").removeClass("oculto");
     }
   });
 
   //* Muestra el form de añadir entrenamiento
-  document
-    .getElementById("mostrarAñadirEntrenamiento")
-    .addEventListener("click", () => show("añadirEntrenamiento"));
+  $("#mostrarAñadirEntrenamiento").click(() => show("añadirEntrenamiento"));
 
   //* Muestra el form de radio para calcular los totales
-  document.getElementById("mostrarTotales").addEventListener("click", () => {
+  $("#mostrarTotales").click(() => {
     show("totales");
   });
+
   //* Muestra el form de radio para calcular los totales
-  document.getElementById("mostrarForo").addEventListener("click", () => {
+  $("#mostrarForo").click(() => {
     show("foro_form");
     show("foro", false);
-    document.getElementById("nick").placeholder = "Nick de usuario: " + localStorage.usuario
+    $("#nick").attr("placeholder", "Nick de usuario: " + localStorage.usuario);
   });
 
   //* Muestra todos los entrenamientos listados
-  document
-    .getElementById("mostrarEntrenamientos")
-    .addEventListener("click", () => {
-      showInner(mostrarEntrenamientos());
+  $("#mostrarEntrenamientos").click(function () {
+    showInner(mostrarEntrenamientos());
 
-      const borrarBtn = document.querySelectorAll(".eliminar");
+    $(".eliminar").click(function () {
+      const tr = $(this).closest("tr");
+      const id = tr.attr("data-id");
 
-      borrarBtn.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const tr = this.closest("tr");
-          const id = tr.dataset.id;
+      usuario.eliminarEntrenamiento(id);
 
-          usuario.eliminarEntrenamiento(id);
-
-          tr.remove();
-        });
-      });
+      tr.remove();
     });
+  });
 
   //* Muestra form Mejor Entrenamiento
-  document
-    .getElementById("mostrarMejorEntrenamiento")
-    .addEventListener("click", () => {
-      show("mejorEntrenamiento");
-    });
+  $("#mostrarMejorEntrenamiento").click(() => {
+    show("mejorEntrenamiento");
+  });
 
   //* Control radio de los mejores entrenamientos
-  document
-    .getElementById("mejorEntrenamiento")
-    .addEventListener("change", (e) => {
-      let contenido;
+  $("#mejorEntrenamiento").on("change", (e) => {
+    let contenido;
 
-      switch (e.target.value) {
-        case "distancia":
-          contenido = mejoresEntrenamientos("distancia");
-          break;
-        case "tiempo":
-          contenido = mejoresEntrenamientos("tiempo");
-          break;
-        case "velocidad":
-          contenido = mejoresEntrenamientos("velocidad");
-          break;
-        default:
-          contenido = ""; //Por toleración de errores
-          break;
-      }
+    switch (e.target.value) {
+      case "distancia":
+        contenido = mejoresEntrenamientos("distancia");
+        break;
+      case "tiempo":
+        contenido = mejoresEntrenamientos("tiempo");
+        break;
+      case "velocidad":
+        contenido = mejoresEntrenamientos("velocidad");
+        break;
+      default:
+        contenido = ""; //Por toleración de errores
+        break;
+    }
 
-      showInner(contenido, false);
-    });
+    showInner(contenido, false);
+  });
 
   //* Control radio de los totales
-  document.getElementById("totales").addEventListener("change", (e) => {
+  $("#totales").on("change", function (e) {
     let contenido;
 
     contenido = totales(e.target.value);
@@ -299,74 +286,29 @@ function listeners() {
   });
 
   //* Añadir entrenamiento
-  document
-    .getElementById("crearEntrenamiento")
-    .addEventListener("click", crearEntrenamiento);
+  $("#crearEntrenamiento").click(crearEntrenamiento);
 
   //* Crear Persona
-  document.getElementById("crearPersona").addEventListener("click", () => {
+  $("#crearPersona").click(function () {
     //* Si es true, se cambian los display de los formularios
 
     if (crearPersona()) {
-      div_login.classList.remove("oculto");
+      $("div_login").removeClass("oculto");
       crearIndex();
     }
   });
   //* Crear usuario
-  document.getElementById("crearUsuario").addEventListener("click", () => {
+  $("#crearUsuario").click(function () {
     //* Si es true, se cambian los display de los formularios
 
     if (crearUsuario()) {
       hider("form_persona");
-      registrar.classList.add("oculto");
-      inicio.classList.add("oculto");
-      div_login.classList.remove("oculto");
+
+      $("#registrar").addClass("oculto");
+      $("#inicio").addClass("oculto");
+      $("#div_login").removeClass("oculto");
     }
   });
-
-  /*
-  *Forma parte de la primera versión de la practica realizada en  el tema 4, he considerado más optimo utilizar las propiedades CSS
-
-  const inputs = document.querySelectorAll("input, select");
-
-  inputs.forEach((el) => {
-    el.addEventListener("focus", () => {
-      el.style.borderColor = "#888";
-      el.style.boxShadow = "0 0 5px rgba(100,100,100,0.3)";
-      el.style.transition = "border 0.3s, box-shadow 0.3s";
-    });
-
-    el.addEventListener("blur", () => {
-      el.style.borderColor = "#ccc";
-      el.style.boxShadow = "none";
-    });
-  });
-  
-  const buttons = document.querySelectorAll("button");
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("mouseover", () => {
-      btn.style.backgroundColor = "rgb(241, 241, 241)";
-      btn.style.transform = "translateY(-1px)";
-      btn.style.transition = "transform 0.2s, background-color 0.2s";
-    });
-
-    btn.addEventListener("mouseout", () => {
-      btn.style.backgroundColor = "";
-      btn.style.transform = "none";
-    });
-
-    btn.addEventListener("mousedown", () => {
-      btn.style.backgroundColor = "rgb(194, 194, 194)";
-      btn.style.transform = "translateY(1px)";
-    });
-
-    btn.addEventListener("mouseup", () => {
-      btn.style.backgroundColor = "rgb(241, 241, 241)";
-      btn.style.transform = "translateY(-1px)";
-    });
-  });
-*/
 
   /*
   * Si se un elemento con la clase .cerrar, es decir la X del popup se le añade un listener.
@@ -378,25 +320,47 @@ function listeners() {
 
   En este caso se elimina el padre de el span, es decir el div que conforma el popup
   */
-  document.querySelector(".cerrar")?.addEventListener("click", function () {
-    this.parentElement.remove();
+  $(".cerrar").click(function () {
+    $(".blur").remove();
   });
 
+  $("#TutorialBtn").click(function(){
+      $(".tutorial").slideToggle()
+  })
+
   //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
-  document.getElementById("cerrarSesion").addEventListener("click", () => {
+  $("#cerrarSesion").click(function () {
     localStorage.clear();
     location.reload();
   });
 
   //* Cambia el tema entre oscuro y blanco
-  document
-  .getElementById("toggleTheme")
-  .addEventListener("click", addDarkTheme);
-  
+  $("#toggleTheme").click(addDarkTheme);
+
   //* Añade publicaciones al foro
-  document
-    .getElementById("publicarPost")
-    .addEventListener("click", publicarPost);
+  $("#publicarPost").click(publicarPost);
+
+  //* Hace visible las flechas del carrusel
+  $(".f-button, .is-arraw").on({
+    mouseenter: function () {
+      $(this).css("opacity", "100%", "!important");
+    },
+    mouseleave: function () {
+      $(this).css("opacity", "0%", "!important");
+    },
+  });
+
+  //* Funcion con fade para mostrar un mensaje al pasar sobre mi nombre
+  $(".me > .btn").on({
+    mouseenter: function () {
+      $("div.msg").fadeToggle("slow");
+      $(this).toggleClass("msgTop");
+    },
+    mouseleave: function () {
+      $("div.msg").fadeToggle(0);
+      $(this).toggleClass("msgTop");
+    },
+  });
 }
 
 /**
@@ -408,19 +372,17 @@ function show(id, hide = true) {
   if (hide) {
     hider(id);
   }
-  formularios_btn.classList.remove("oculto");
+  $("#formularios_btn").removeClass("oculto");
 
-  const elemento = document.getElementById(id);
-  elemento.classList.remove("oculto");
+  $(`#${id}`).removeClass("oculto");
 
   switch (id) {
     case "añadirEntrenamiento":
-      elemento.fechaEntrenamiento.value = ahoraDatetimeLocal();
+      $(`#${id} #fechaEntrenamiento`).val(ahoraDatetimeLocal());
       break;
     case "totales":
     case "mejorEntrenamiento":
-      const text = document.createElement("p");
-      text.textContent = "Selecciona una de las categorias";
+      const text = $("<p>").text("Selecciona una de las categorias");
       showInner([text], false);
       break;
 
@@ -433,14 +395,14 @@ function show(id, hide = true) {
  * El metodo muestra [section id=resultados] e imprime en este en String que llegue por @contenido , si se añade un false se mantienen los formularios y no se ocultan
  */
 function showInner(contenido, hide = true) {
-  const resultadoInner = document.getElementById("resultados");
-  resultadoInner.innerHTML = "";
+  const resultadoInner = $("#resultados");
+  resultadoInner.text("");
   if (hide) {
     hider();
   }
-  resultadoInner.classList.remove("oculto");
+  resultadoInner.removeClass("oculto");
   contenido.forEach((elemento) => {
-    resultadoInner.appendChild(elemento);
+    resultadoInner.append(elemento);
   });
 }
 
@@ -448,20 +410,14 @@ function showInner(contenido, hide = true) {
  * Este metodo oculta todos los formularios y reinicia la [section id=resultados]
  */
 function hider(id = null) {
-  formularios_btn.classList.add("oculto");
-  foro.classList.add("oculto");
+  $("#formularios_btn").addClass("oculto");
+  $("#foro").addClass("oculto");
 
-  const resultadoInner = document.getElementById("resultados");
-  resultados.classList.add("oculto");
-  resultadoInner.innerHTML = "";
+  $("#resultados").addClass("oculto").text("");
 
-  const forms = document.querySelectorAll("form");
-
-  forms.forEach((form) => {
-    if (id != form.id) {
-      form.classList.add("oculto");
-    }
-  });
+  $("form")
+    .not("#" + id)
+    .addClass("oculto");
 }
 
 /**
@@ -472,61 +428,62 @@ function hider(id = null) {
  * Se recorre todos los input y en base al id con un swtich se hacen sus comprobaciones individuales con un regex llamando a comprobarRegex()
  * En @error se vuelve true si hay un error, inciando el if(error), mostrando el mensaje de error y cambiando la clase al input para ponerle estilo
  * Si @ultimatum es true se crea @usuario si no se escriben los mensajes con showInner(), se devuele false y hasta que el listener llame de nuevo
- * 
+ *
  * Estos datos recogidos se añaden a localStorage
  */
 function crearPersona() {
-  const persona = document.getElementById("form_persona");
 
   let ultimatum = true;
   let mensajes = [];
-  persona.querySelectorAll("input").forEach((input) => {
+  $("#form_persona input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    switch (input.id) {
+    switch (this.id) {
       case "nombre":
-        error = !comprobarRegex(/^[\w]{3,}$/, input.value);
+        error = !comprobarRegex(/^[\w]{3,}$/, $(this).val());
         tempMsj = "Debe contener el nombre menos 3 caracteres";
         break;
       case "correo":
-        error = !comprobarRegex(/^[\w]{1,}@[\w]{1,}.[\w]{1,}$/, input.value);
+        error = !comprobarRegex(/^[\w]{1,}@[\w]{1,}.[\w]{1,}$/, $(this).val());
         tempMsj = "Introduce un correo valido";
         break;
       case "altura":
       case "peso":
-        error = !comprobarRegex(/^[\d]{1,}$/, input.value);
-        tempMsj = "Introduce un valor valido en " + input.id;
+        error = !comprobarRegex(/^[\d]{1,}$/, $(this).val());
+        tempMsj = "Introduce un valor valido en " + $(this).val();
         break;
       case "fecha_nacimiento":
         error =
-          input.value == "" ||
-          input.value == null ||
-          new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
+          $(this).val() == "" ||
+          $(this).val() == null ||
+          new Date($(this).val()) > new Date(); //* Comprobar que la fecha no es posterior
         tempMsj = "Introduce una fecha valida";
         break;
     }
 
     if (error) {
-      input.value = "";
-      const error = document.createElement("p");
-      error.textContent = `[ERROR] - ${tempMsj}`;
-      error.classList.add("p-error");
+      $(this).val("");
+      const error = $("<p>").text(`[ERROR] - ${tempMsj}`).addClass("p-error");
       mensajes.push(error);
 
-      input.className = "input-error";
+      $(this).removeClass("input-normal");
+      $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      input.className = "input-normal";
+      $(this).removeClass("input-error");
+      $(this).addClass("input-normal");
     }
   });
 
   if (ultimatum) {
-    const correo = persona.correo.value;
-    const nombre = persona.nombre.value;
-    const altura = persona.altura.value;
-    const peso = persona.peso.value;
-    const fechaNacimiento = new Date(persona.fecha_nacimiento.value);
+    const correo = $("#form_persona #correo").val();
+    const nombre = $("#form_persona #nombre").val();
+    const altura = $("#form_persona #altura").val();
+    const peso = $("#form_persona #peso").val();
+    const fechaNacimiento = new Date(
+      $("#form_persona #fecha_nacimiento").val(),
+    );
     usuario = new Persona(
       localStorage.usuario,
       localStorage.password,
@@ -534,14 +491,14 @@ function crearPersona() {
       correo,
       altura,
       peso,
-      fechaNacimiento
+      fechaNacimiento,
     );
     localStorage.sesion = true;
     localStorage.correo = correo;
     localStorage.nombre = nombre;
     localStorage.altura = altura;
     localStorage.peso = peso;
-    localStorage.fechaNacimiento = persona.fecha_nacimiento.value;
+    localStorage.fechaNacimiento = $("#form_persona #fecha_nacimiento").val();
   } else {
     showInner(mensajes, false);
   }
@@ -553,86 +510,84 @@ function crearPersona() {
  * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
  */
 function crearEntrenamiento() {
-  const entrenamiento = document.getElementById("añadirEntrenamiento");
 
   let mensajes = [];
   let ultimatum = true;
-  entrenamiento.querySelectorAll("input").forEach((input) => {
+  $("#añadirEntrenamiento input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    switch (input.id) {
+    switch (this.id) {
       case "distanciaInput":
-        error = input.value < 0 || input.value == null || input.value == "";
-        tempMsj = "Introduce un valor valido en " + input.id;
+        error =
+          $(this).val() < 0 || $(this).val() == null || $(this).val() == "";
+        tempMsj = "Introduce un valor valido en " + $(this).val();
         break;
       case "fechaEntrenamiento":
         error =
-          input.value == "" ||
-          input.value == null ||
-          new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
+          $(this).val() == "" ||
+          $(this).val() == null ||
+          new Date($(this).val()) > new Date(); //* Comprobar que la fecha no es posterior
         tempMsj = "Introduce una fecha valida";
         break;
       default:
         break;
     }
     if (error) {
-      input.value = "";
-      const error = document.createElement("p");
-      error.textContent = `[ERROR] - ${tempMsj}`;
-      error.classList.add("p-error");
+      $(this).val("");
+      const error = $("<p>").text(`[ERROR] - ${tempMsj}`).addClass("p-error");
       mensajes.push(error);
 
-      input.className = "input-error";
+      $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      input.className = "input-normal";
+      $(this).addClass("input-normal");
     }
   });
 
-  const distancia = Number(entrenamiento.distanciaInput.value);
-  const horas = Number(entrenamiento.horas.value);
-  const minutos = Number(entrenamiento.minutos.value);
+  const distancia = Number($("#añadirEntrenamiento #distanciaInput").val());
+  const horas = Number($("#añadirEntrenamiento #horas").val());
+  const minutos = Number($("#añadirEntrenamiento #minutos").val());
   const tiempo = horas * 60 + minutos; //* min
 
   //* Para controlar el tiempo, por si los dos tienen valor 0 o negativo.
   if (tiempo <= 0) {
-    const errorTiempo = document.createElement("p");
-    errorTiempo.textContent = `[ERROR] - Introdocude un tiempo valido`;
-    errorTiempo.classList.add("p-error");
+    const errorTiempo = $("<p>")
+      .text(`[ERROR] - Introdocude un tiempo valido`)
+      .addClass("p-error");
     mensajes.push(errorTiempo);
 
-    entrenamiento.horas.className = "input-error";
-    entrenamiento.minutos.className = "input-error";
+    $("#añadirEntrenamiento #horas").addClass("input-error");
+    $("#añadirEntrenamiento #minutos").addClass("input-error");
     ultimatum = false;
   }
 
   //* Para controlar el tipo, por si no hay.
-  const tipo = tipoActividad.value;
+  const tipo = $("#tipoActividad").val();
   if (tipo == "" || tipo == null) {
-    const errorTipo = document.createElement("p");
-    errorTipo.textContent = `[ERROR] - Introdocude el tipo de entrenamiento`;
-    errorTipo.classList.add("p-error");
+    const errorTipo = $("<p>")
+      .text(`[ERROR] - Introdocude el tipo de entrenamiento`)
+      .addClass("p-error");
     mensajes.push(errorTipo);
 
-    entrenamiento.tipoActividad.className = "input-error";
+    $("#añadirEntrenamiento #tipoActividad").addClass("input-error");
     ultimatum = false;
   } else {
-    entrenamiento.tipoActividad.className = "input-normal";
+    $("#añadirEntrenamiento #tipoActividad").addClass("input-normal");
   }
 
-  const fecha = new Date(entrenamiento.fechaEntrenamiento.value);
+  const fecha = new Date($("#añadirEntrenamiento #fechaEntrenamiento").val());
 
   if (ultimatum) {
     usuario.añadirEntrenamiento(
-      new Entrenamiento(usuario.nextId(), distancia, tiempo, tipo, fecha)
+      new Entrenamiento(usuario.nextId(), distancia, tiempo, tipo, fecha),
     );
 
-    let p = document.createElement("p");
-    p.classList.add("p-exito");
-    p.textContent = `Entrenamiento ${
-      usuario.getEntrenamientos().length
-    }º creado (pulsa Mostrar entrenamientos para ver tus entrenamientos)`;
+    const p = $("<p>")
+      .addClass("p-exito")
+      .text(
+        `Entrenamiento ${usuario.getEntrenamientos().length}º creado (pulsa Mostrar entrenamientos para ver tus entrenamientos)`,
+      );
 
     showInner([p], false);
   } else {
@@ -645,23 +600,22 @@ function crearEntrenamiento() {
   Comoparte la logica de crearPersona(), pero para crear los datos de la cuenta
 */
 function crearUsuario() {
-  const login = document.getElementById("form_registro");
 
   let ultimatum = true;
   let mensajes = [];
-  login.querySelectorAll("input").forEach((input) => {
+  $("#form_registro input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    switch (input.id) {
+    switch (this.id) {
       case "usuario":
-        error = !comprobarRegex(/^[\w]{3,}$/, input.value);
+        error = !comprobarRegex(/^[\w]{3,}$/, $(this).val());
         tempMsj = "Debe contener el nombre de usuario al menos 3 caracteres";
         break;
       case "password":
         error = !comprobarRegex(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-          input.value
+          $(this).val(),
         );
         tempMsj =
           "Debe contener al menos 8 caracteres con una minuscula, una mayuscula y un número ";
@@ -669,22 +623,24 @@ function crearUsuario() {
     }
 
     if (error) {
-      input.value = "";
-      const error = document.createElement("p");
-      error.textContent = `[ERROR] - ${tempMsj}`;
-      error.classList.add("p-error");
-      mensajes.push(error);
+      $(this).val("");
+      const errorPush = $("<p>")
+        .text(`[ERROR] - ${tempMsj}`)
+        .addClass("p-error");
+      mensajes.push(errorPush);
 
-      input.className = "input-error";
+      $(this).removeClass("input-normal");
+      $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      input.className = "input-normal";
+      $(this).removeClass("input-error");
+      $(this).addClass("input-normal");
     }
   });
 
   if (ultimatum) {
-    localStorage.usuario = login.usuario.value;
-    localStorage.password = login.password.value;
+    localStorage.usuario = $("#form_registro #usuario").val();
+    localStorage.password = $("#form_registro #password").val();
   } else {
     showInner(mensajes, false);
   }
@@ -721,19 +677,17 @@ function ahoraDatetimeLocal() {
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
 function mostrarEntrenamientos() {
-  const titulo = document.createElement("h2");
-  titulo.textContent = "Entrenamientos";
+  const titulo = $("<h2>").text("Entrenamientos");
 
   if (usuario.getEntrenamientos().length == 0) {
-    const texto = document.createElement("p");
-    texto.textContent = "No hay entrenamientos";
+    const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
   } else {
-    let table = createTable();
+    const table = createTable();
 
     usuario.getEntrenamientos().forEach((entrenamiento) => {
-      table.appendChild(entrenamiento.mostrarInfo()); // ya devuelve <tr> completo
+      table.append(entrenamiento.mostrarInfo()); // ya devuelve <tr> completo
     });
     return (contenido = [titulo, table]);
   }
@@ -741,8 +695,8 @@ function mostrarEntrenamientos() {
 
 // Metodo para crear la tabla para listar los entrenamientos
 function createTable() {
-  const table = document.createElement("table");
-  const trTitulos = document.createElement("tr");
+  const table = $("<table>");
+  const trTitulos = $("<tr>");
 
   const headers = [
     "Tipo",
@@ -755,13 +709,10 @@ function createTable() {
   ];
 
   headers.forEach((text) => {
-    const th = document.createElement("th");
-    th.textContent = text;
-    trTitulos.appendChild(th);
+    trTitulos.append($("<th>").text(text));
   });
 
-  table.appendChild(trTitulos);
-  return table;
+  return table.append(trTitulos);
 }
 
 /**
@@ -770,13 +721,12 @@ function createTable() {
  * Por un forEach se busca el que tiene la mayor velocidad,tiempo o velocidad según @valor sobre todos los entrenamientos
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
+
 function mejoresEntrenamientos(valor) {
-  const titulo = document.createElement("h2");
-  titulo.textContent = `Mejor entrenamiento ${valor}`;
+  const titulo = $("<h2>").text(`Mejor entrenamiento ${valor}`);
 
   if (usuario.getEntrenamientos().length == 0) {
-    const texto = document.createElement("p");
-    texto.textContent = "No hay entrenamientos";
+    const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
   } else {
@@ -804,9 +754,9 @@ function mejoresEntrenamientos(valor) {
       }
     });
 
-    let table = createTable();
+    const table = createTable();
 
-    table.appendChild(mejorMarca.mostrarInfo());
+    table.append(mejorMarca.mostrarInfo());
 
     return (contenido = [titulo, table]);
   }
@@ -821,12 +771,10 @@ function mejoresEntrenamientos(valor) {
  */
 
 function totales(valor) {
-  const titulo = document.createElement("h2");
-  titulo.textContent = `Total ${valor}`;
+  const titulo = $("<h2>").text(`Total ${valor}`);
 
   if (usuario.getEntrenamientos().length == 0) {
-    const texto = document.createElement("p");
-    texto.textContent = "No hay entrenamientos";
+    const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
   } else {
@@ -846,16 +794,14 @@ function totales(valor) {
       }
     });
 
-    let texto;
+    const texto = $("<p>");
 
     switch (valor) {
       case "tiempo":
-        texto = document.createElement("p");
-        texto.textContent = `Total min entrenando: ${total} min`;
+        texto.text(`Total min entrenando: ${total} min`);
         break;
       case "distancia":
-        texto = document.createElement("p");
-        texto.textContent = `Total min entrenando: ${total} min`;
+        texto.text(`Total min entrenando: ${total} min`);
         break;
       default:
         break;
@@ -869,13 +815,13 @@ function totales(valor) {
  * Inprimiendo @usuario a traves de mostrarPersona()
  */
 function crearIndex() {
-  inicio.classList.add("oculto");
-  div_login.classList.add("oculto");
+  $("#inicio").addClass("oculto");
+  $("#div_login").addClass("oculto");
 
-  btn.classList.remove("oculto");
-  perfil.classList.remove("oculto");
-  formularios_btn.classList.remove("oculto");
-  resultados.classList.add("oculto");
+  $("#btn").removeClass("oculto");
+  $("#perfil").removeClass("oculto");
+  $("#formularios_btn").removeClass("oculto");
+  $("#resultados").addClass("oculto");
 
   mostrarPersona();
 }
@@ -884,9 +830,7 @@ function crearIndex() {
  * Esta función inprime los datos de @usuario con innerHTML en el [p id=datosPerfil] tras la configuración de crearIndex()
  */
 function mostrarPersona() {
-  const p = document.getElementById("datosPerfil");
-
-  p.textContent = usuario.mostrarInfo();
+  const p = $("#datosPerfil").html(usuario.mostrarInfo());
 }
 
 /**
@@ -902,39 +846,117 @@ function imgs() {
     "img/20210203-1024x684_1200x802.webp",
     "img/strong_men.jpg",
   ];
-  document.querySelector("img").src = imgs[i];
+  const img = $("img").attr("src", imgs[i]);
 
   setInterval(() => {
-    document.querySelector("img").src = imgs[i++];
+    img.attr("src", imgs[i++]);
 
     if (i == imgs.length) i = 0;
   }, 50000);
 }
 
-// Crea un popup que añade al html
+//* Crea un popup que añade al html
 function createPopup() {
-  let popup = document.createElement("div");
-  popup.classList.add("popup");
+  const popup = $("<div>").addClass("popup item");
 
-  let equis = document.createElement("i");
-  equis.classList.add("fa-solid");
-  equis.classList.add("fa-xmark");
+  const equis = $("<i>").addClass("fa-solid fa-xmark");
 
-  let cerrar = document.createElement("span");
-  cerrar.classList.add("cerrar");
-  cerrar.appendChild(equis);
+  const cerrar = $("<span>").addClass("cerrar").append(equis);
 
-  let titulo = document.createElement("h2");
-  titulo.textContent = "Bienvenido🙋";
+  const titulo = $("<h2>").text("Bienvenido🙋");
 
-  let contenido = document.createElement("p");
-  contenido.textContent = "Bienvenido al nuevo FITNESS APP :D";
+  const contenido = $("<p>").text("Bienvenido al nuevo JQ-FITNESS APP :D");
 
-  popup.appendChild(cerrar);
-  popup.appendChild(titulo);
-  popup.appendChild(contenido);
+  const blur = $("<div>")
+    .addClass("blur")
+    .append(popup.append(cerrar).append(titulo).append(contenido));
 
-  document.body.appendChild(popup);
+  $("body").append(blur);
+
+  //* Aquí comienza su animación, rotar() lo pone a guirar de forma continua
+  //* Con los siguientes metodos se itera y se realizan las animaciones en cadena.
+  let rotacion = { deg: 0 };
+  rotar(rotacion);
+  popupInicio(popup);
+  let iterar = 1;
+  for (let i = 0; i < 30; i++) {
+    if (i % 3 === 0) ++iterar;
+
+    popupCentrifuga(popup, iterar);
+  }
+
+  popupSalir(popup, rotacion);
+
+  //* Al hacer click en el div que ocupa toda la pantalla, si se pulsa durante la anim está se detiene 
+  //* Pone el popup centrado
+  $(blur).click(function () {
+    let alto = $(window).height() - $(popup).outerHeight();
+    let ancho = $(window).width() - $(popup).outerWidth();
+    $(rotacion).stop(true);
+    $(".popup")
+      .stop(true, true)
+      .animate({ bottom: alto / 2, left: ancho / 2 }, 0);
+    $(".popup").css("transform", "rotate(0deg)");
+  });
+}
+
+function rotar(rotacion) {
+  $(rotacion).animate(
+    { deg: 400000 },
+    {
+      duration: 100000,
+      step: function (now) {
+        $(".popup").css("transform", "rotate(" + now + "deg)");
+      },
+    },
+  );
+}
+//* El inicio de la anim
+//* En todos para poder hacerlo relativo a la pantalla se resta el tamaño de la pantalla al popup
+//* En cada metodo se piden de nuevo, por si el layout ha cambiado
+function popupInicio(popup) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+
+  $(".popup").animate({ bottom: alto / 2, left: ancho / 2 }, 0);
+  $(".popup")
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 5000)
+    .animate({ bottom: alto / 2, left: ancho / 8 }, "slow");
+}
+
+//* Animación final, se pone en posición
+function popupSalir(popup, rotacion) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+
+  $(".popup")
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 0, function () {
+      $(rotacion).stop(true);
+      $(".popup").css("transform", "rotate(0)");
+    })
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 0)
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 1000)
+    .animate({ left: -1000 }, "slow")
+    .animate({ left: ancho / 2, bottom: alto + 1000 }, 0)
+    .animate({ left: ancho / 2, bottom: alto / 2 }, "slow");
+}
+
+//* Esta animación se itera, es la que hace girar al rededor de la pantalla
+function popupCentrifuga(popup, iterar) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+  let velocidad = 300 / iterar;
+
+  $(".popup")
+    .animate({ bottom: alto / 2 }, 0)
+    .animate({ bottom: alto / 8, left: ancho / 8 }, velocidad)
+    .animate({ bottom: 0, left: ancho / 2 }, velocidad)
+    .animate({ bottom: alto / 8, left: ancho - ancho / 8 }, velocidad)
+    .animate({ bottom: alto / 2, left: ancho }, velocidad)
+    .animate({ bottom: alto - alto / 8, left: ancho - ancho / 8 }, velocidad)
+    .animate({ bottom: alto, left: ancho / 2 }, velocidad)
+    .animate({ bottom: alto - alto / 8, left: ancho / 8 }, velocidad)
+    .animate({ bottom: alto / 2, left: 0 }, velocidad);
 }
 
 /**
@@ -942,69 +964,85 @@ function createPopup() {
  * pero como se solicitaba en la practica añadir un campo para nick, este se puede modificar
  */
 function publicarPost() {
-  const textarea = document.getElementById("opinion");
-  const nick = document.getElementById("nick");
+  const textarea = $("#opinion");
+  const nick = $("#nick");
+
   let nickName = localStorage.usuario;
 
-  if (textarea.value == "") {
-    textarea.placeholder = "[ERROR] - No hay contenido en el post";
-    textarea.classList.add("input-error");
+  if (textarea.val() == "") {
+    textarea
+      .attr("placeholder", "[ERROR] - No hay contenido en el post")
+      .addClass("input-error");
     return;
   } else {
-    textarea.placeholder = "Opinion..";
-    textarea.classList.remove("input-error");
+    textarea.attr("placeholder", "Opinion..").removeClass("input-error");
   }
 
-  if (nick.value != "") {
-    nickName = nick.value;
+  if (nick.val() != "") {
+    nickName = nick.val();
   }
 
-  const divNode = document.createElement("div");
-  divNode.classList.add("post");
+  const divNode = $("<div>").addClass("post");
 
-  const userPost = document.createElement("p");
-  userPost.classList.add("user");
-  userPost.textContent = nickName + " • " + new Date().toLocaleString();
+  const userPost = $("<p>")
+    .addClass("user")
+    .text(`${nickName} • ${new Date().toLocaleString()}`);
 
-  const textoPost = document.createElement("p");
-  textoPost.classList.add("texto");
-  textoPost.textContent = textarea.value;
+  const textoPost = $("<p>").addClass("texto").text(textarea.val());
 
-  divNode.appendChild(userPost);
-  divNode.appendChild(textoPost);
+  divNode.append(userPost).append(textoPost);
 
-  const foroDiv = document.getElementById("foro");
-  foroDiv.insertBefore(divNode, foroDiv.children[0]);
+  $("#foro").prepend(divNode);
 
-  textarea.value = "";
+  textarea.text();
 }
 
 /**
  * Hace toggle entre el tema oscuro y los logos del button, guarda la ultima acción en localStorage
  */
 function addDarkTheme() {
-  let dark = document.body.classList.toggle("dark");
+  let dark = $("body").toggleClass("dark");
 
-  let btn = document.getElementById("toggleTheme").children[0];
-  btn.classList.toggle("fa-moon");
-  btn.classList.toggle("fa-sun");
+  $("#toggleTheme i").toggleClass("fa-moon");
+  $("#toggleTheme i").toggleClass("fa-sun");
 
   localStorage.darkTheme = dark;
 }
 
+//! Deprecated: Este metodo servia para actualizar las imagenes
+function carruselImagenes() {
+  Carousel(
+    document.getElementById("myCarousel"),
+    {
+      pauseOnHover: true,
+      Autoplay: {
+        timeout: 10000,
+      },
+    },
+    {
+      Arrows,
+      Autoplay,
+    },
+  ).init();
+
+  Fancybox.bind("[data-fancybox]");
+}
+
 //* Cuando inicia la web se ejecutan los metodos con permanentes
-window.onload = () => {
+$(document).ready(function () {
+  carruselImagenes();
+
   if (localStorage.darkTheme === "true") {
     addDarkTheme();
   }
   if (localStorage?.sesion) {
-    document.getElementById("mostrarForm").innerHTML = "Iniciar";
+    $("#mostrarForm").text("Iniciar");
   } else {
     createPopup();
   }
   listeners();
-  imgs();
-};
+  //!imgs();
+});
 
 //* Variable donde se registran todos los usuarios
 let usuario;

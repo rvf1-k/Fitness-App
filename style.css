@@ -49,9 +49,37 @@ body.dark {
 }
 
 #toggleTheme {
-  margin: 1em 6em 0 0;
-  align-self: flex-end;
   text-shadow: var(--h1-shadow);
+}
+
+#btn-top{
+  margin: 1em 5em 0 0;
+  align-self: flex-end;
+  display: flex;
+  gap: 0.5em;
+}
+
+.me {
+  position: relative;
+}
+
+#btn-top > .me > button {
+  position: relative;
+}
+
+.msgTop {
+  box-shadow: 3px 3px 1px rgba(87, 87, 87, 0.466) !important;
+  z-index: 999;
+}
+
+div.msg {
+  position: absolute;
+  margin: 0;
+  padding-top: 2.5em;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  text-align: start;
 }
 
 h1 {
@@ -63,7 +91,7 @@ h1 {
   box-shadow: var(--h1-shadow);*/
 }
 
-div {
+.item {
   margin: 1em 5em;
   padding: 1em;
   border: var(--borders);
@@ -74,7 +102,7 @@ div {
   box-shadow: var(--content-shadow);
 }
 
-button {
+.btn {
   padding: 0.5em 1em;
   font-weight: bold;
   background-color: var(--btn-bg);
@@ -82,7 +110,9 @@ button {
   border-radius: 5px;
   color: var(--text);
   box-shadow: 1px 1px 2px #686868;
-  transition: background 0.3s, transform 0.1s;
+  transition:
+    background 0.3s,
+    transform 0.1s;
   cursor: pointer;
 }
 
@@ -96,17 +126,17 @@ li {
   margin: 1em;
 }
 
-button:hover {
+.btn:hover {
   background-color: var(--btn-bg-hover-focus);
   transform: translateY(-1px);
 }
 
-button:active {
+.btn:active {
   box-shadow: inset 1px 1px 2px #686868;
   transform: translateY(1px);
 }
 
-button:focus {
+.btn:focus {
   background-color: var(--btn-bg-hover-focus);
   box-shadow: inset 1px 1px 2px #686868;
 }
@@ -119,11 +149,16 @@ input:focus {
 
 .popup {
   position: fixed;
-  top: 50%;
-  left: 45%;
-  transform: translate(-50%, -50%);
   padding: 50px;
   z-index: 1000;
+  height: fit-content;
+  width: fit-content;
+  margin: 0;
+  transform-origin: center;
+  /*  
+  left: 45%;
+  transform: translate(-50%, -50%);
+*/
 }
 
 .cerrar {
@@ -135,14 +170,17 @@ input:focus {
 
 .input-normal,
 input,
-select, textarea {
+select,
+textarea {
   border: 1px solid #ccc;
   background-color: var(--input_bg);
   color: var(--text);
   outline: none;
   padding: 5px 8px;
   border-radius: 4px;
-  transition: border 0.3s, box-shadow 0.3s;
+  transition:
+    border 0.3s,
+    box-shadow 0.3s;
 }
 
 .input-error {
@@ -220,4 +258,50 @@ div.post > p {
 
 i {
   color: var(--text);
+}
+
+div.blur {
+  background: rgba(173, 173, 173, 0.658);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  transform-origin: center;
+}
+
+.gallery-image img {
+  width: 256px;
+  height: auto;
+  float: left;
+  margin-right: 10px;
+}
+
+.f-carousel img {
+  width: 100%;
+  height: auto;
+  float: left;
+  margin-right: 10px;
+}
+#myCarousel {
+  width: 600px;
+}
+
+.imagenes{
+  display: flex;
+  justify-content: center;
+}
+
+.is-next, .is-prev{
+  border: none !important;
+  color: #000000 !important;
+  opacity: 0%;
+}
+
+.f-progressbar{
+  background-color: rgba(255, 255, 255, 0.7) !important;
 }

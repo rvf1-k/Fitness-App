@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -12,38 +12,127 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Add jQuery library -->
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-latest.min.js"
+    ></script>
+    <!-- Add fancybox-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.lazyload.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.arrows.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.thumbs.css"
+    />
   </head>
 
   <body>
-    <button id="toggleTheme">
-      <i class="fa-solid fa-sun"></i>
-    </button>
-    <div>
-      <h1>Fitness app</h1>
+    <div id="btn-top">
+      <button class="btn" id="toggleTheme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+      <div class="me">
+        <button class="btn">
+          <span>Rafel Moreno</span>
+        </button>
+        <div class="msg item oculto">
+          <span>Hola, yo hice la web 🙆‍♂️</span>
+          <br>
+          <br>
+          <span>Esto es una practica de JQuery</span>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <img src="" alt="Imagen de cabecera de Fitness App" height="300" />
+    <div class="item">
+      <h1>JQ-Fitness app</h1>
     </div>
 
-    <div id="inicio" class="inicio">
-      <button id="mostrarForm" type="button">Registrarse</button>
+    <div class="item imagenes">
+      <div class="f-carousel galeria" id="myCarousel">
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img1.png"
+        >
+          <a href="imgs/img1.png" rel="galeria" title="Entrenamiento asistido">
+            <img src="imgs/img1.png" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img2.webp"
+        >
+          <a
+            href="imgs/img2.webp"
+            rel="galeria"
+            title="Controla tus entrenamientos"
+          >
+            <img src="imgs/img2.webp" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img3.jpg"
+        >
+          <a
+            href="imgs/img3.jpg"
+            rel="galeria"
+            title="Registra el tiempo de tu entrenamiento"
+          >
+            <img src="imgs/img3.jpg" alt=""
+          /></a>
+        </div>
+        <div
+          class="f-carousel__slide"
+          data-fancybox="gallery"
+          href="imgs/img4.jpg"
+        >
+          <a
+            href="imgs/img4.jpg"
+            rel="galeria"
+            title="Observa el desarrollo de tus capazidades"
+          >
+            <img src="imgs/img4.jpg" alt=""
+          /></a>
+        </div>
+      </div>
     </div>
 
-    <div id="registrar" class="registrar oculto">
+    <div id="inicio" class="inicio item">
+      <button class="btn" id="mostrarForm" type="button">Registrarse</button>
+    </div>
+
+    <div id="registrar" class="registrar item oculto">
       <form id="form_registro">
         <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" />
+        <input type="text" id="usuario"/>
         <label for="password">Contraseña:</label>
         <input type="password" id="password" />
         <input type="button" id="crearUsuario" value="Enviar" />
       </form>
     </div>
 
-    <div id="div_login" class="login oculto">
+    <div id="div_login" class="login item oculto">
       <form id="form_persona">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" />
+        <input type="text" id="nombre"/>
 
         <label for="correo">Correo:</label>
         <input type="email" id="correo" />
@@ -61,24 +150,47 @@
       </form>
     </div>
 
-    <div id="perfil" class="oculto">
+    <div id="perfil" class="item oculto">
       <h3>Usuario</h3>
       <p id="datosPerfil"></p>
     </div>
 
-    <div id="btn" class="oculto">
-      <button id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
-      <button id="mostrarEntrenamientos">Mostrar entrenamientos</button>
-      <button id="mostrarMejorEntrenamiento">
+    <div id="btn" class="item oculto">
+      <button class="btn" id="mostrarAñadirEntrenamiento">
+        Añadir entrenamiento
+      </button>
+      <button class="btn" id="mostrarEntrenamientos">
+        Mostrar entrenamientos
+      </button>
+      <button class="btn" id="mostrarMejorEntrenamiento">
         Mostrar mejor entrenamiento
       </button>
-      <button id="mostrarTotales">Mostrar totales</button>
-      <button id="mostrarForo">Foro</button>
-      <button id="cerrarSesion">Cerrar sesión</button>
+      <button class="btn" id="mostrarTotales">Mostrar totales</button>
+      <button class="btn" id="mostrarForo">Foro</button>
+      <button class="btn" id="cerrarSesion">Cerrar sesión</button>
+      <button class="btn" id="TutorialBtn">Tutorial</button>
+    </div>
+
+    <div class="item tutorial oculto">
+      <p>
+        Pulsa en <strong>Añadir entrenamiento</strong>, para empezar a hacer el
+        registro.
+      </p>
+      <p>
+        Utiliza <strong>Mostrar entrenamientos</strong> para admistrar tus
+        registros.
+      </p>
+      <p>
+        Puedes ver tus mejores entrenamientos en
+        <strong>Mejor entrenamiento</strong> y tus totales en
+        <strong>Mostrar Totales</strong>.
+      </p>
+      <p>Utiliza el <strong>Foro</strong> para compartir tus experiencias.</p>
+      <p>⚠️ Si <strong>cierras sesión</strong> se perderan tus datos</p>
     </div>
 
     <section id="contenido">
-      <div id="formularios_btn" class="oculto">
+      <div id="formularios_btn" class="item oculto">
         <form id="añadirEntrenamiento" class="oculto">
           <label for="distanciaInput">Distancia(m):</label>
           <input type="number" id="distanciaInput" />
@@ -109,22 +221,22 @@
         <form id="mejorEntrenamiento" class="oculto">
           <input
             type="radio"
-            id="distanciaRadio"
+            id="distanciaMejor"
             name="dato"
             value="distancia"
           />
-          <label for="distanciaRadio">Distancia</label>
+          <label for="distanciaMejor">Distancia</label>
 
-          <input type="radio" id="tiempoRadio" name="dato" value="tiempo" />
-          <label for="tiempoRadio">Tiempo</label>
+          <input type="radio" id="tiempoMejor" name="dato" value="tiempo" />
+          <label for="tiempoMejor">Tiempo</label>
 
           <input
             type="radio"
-            id="velocidadRadio"
+            id="velocidadMejor"
             name="dato"
             value="velocidad"
           />
-          <label for="velocidadRadio">Velocidad</label>
+          <label for="velocidadMejor">Velocidad</label>
         </form>
 
         <form id="totales" class="oculto">
@@ -134,10 +246,10 @@
             name="total"
             value="distancia"
           />
-          <label for="distanciaRadio">Distancia Total</label>
+          <label for="distanciaTotal">Distancia Total</label>
 
           <input type="radio" id="tiempoTotal" name="total" value="tiempo" />
-          <label for="tiempoRadio">Tiempo Total</label>
+          <label for="tiempoTotal">Tiempo Total</label>
         </form>
 
         <form id="foro_form" class="oculto">
@@ -161,9 +273,14 @@
           <input type="button" id="publicarPost" value="Publicar" />
         </form>
       </div>
-      <div id="resultados" class="oculto"></div>
-      <div id="foro" class="oculto"></div>
+      <div id="resultados" class="oculto item"></div>
+      <div id="foro" class="oculto item"></div>
     </section>
     <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.lazyload.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.arrows.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/carousel/carousel.thumbs.umd.js"></script>
   </body>
 </html>
