@@ -12,13 +12,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-        <!-- Add jQuery library -->
+    <!-- Add jQuery library -->
     <script
       type="text/javascript"
       src="http://code.jquery.com/jquery-latest.min.js"
     ></script>
     <!-- Add fancybox-->
-        <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css"
     />
@@ -75,7 +75,11 @@
           data-fancybox="gallery"
           href="imgs/img2.webp"
         >
-          <a href="imgs/img2.webp" rel="galeria" title="Controla tus entrenamientos">
+          <a
+            href="imgs/img2.webp"
+            rel="galeria"
+            title="Controla tus entrenamientos"
+          >
             <img src="imgs/img2.webp" alt=""
           /></a>
         </div>
@@ -84,7 +88,11 @@
           data-fancybox="gallery"
           href="imgs/img3.jpg"
         >
-          <a href="imgs/img3.jpg" rel="galeria" title="Registra el tiempo de tu entrenamiento">
+          <a
+            href="imgs/img3.jpg"
+            rel="galeria"
+            title="Registra el tiempo de tu entrenamiento"
+          >
             <img src="imgs/img3.jpg" alt=""
           /></a>
         </div>
@@ -93,7 +101,11 @@
           data-fancybox="gallery"
           href="imgs/img4.jpg"
         >
-          <a href="imgs/img4.jpg" rel="galeria" title="Observa el desarrollo de tus capazidades">
+          <a
+            href="imgs/img4.jpg"
+            rel="galeria"
+            title="Observa el desarrollo de tus capazidades"
+          >
             <img src="imgs/img4.jpg" alt=""
           /></a>
         </div>
@@ -129,7 +141,7 @@
         <input type="number" id="peso" value="10" />
 
         <label for="fecha_nacimiento">Fecha nacimiento:</label>
-        <input type="date" id="fecha_nacimiento" value="11-11-1111" />
+        <input type="date" id="fecha_nacimiento" value="1111-11-11" />
 
         <input type="button" id="crearPersona" value="Crear" />
       </form>
@@ -141,14 +153,36 @@
     </div>
 
     <div id="btn" class="item oculto">
-      <button class="btn" id="mostrarAñadirEntrenamiento">Añadir entrenamiento</button>
-      <button class="btn" id="mostrarEntrenamientos">Mostrar entrenamientos</button>
+      <button class="btn" id="mostrarAñadirEntrenamiento">
+        Añadir entrenamiento
+      </button>
+      <button class="btn" id="mostrarEntrenamientos">
+        Mostrar entrenamientos
+      </button>
       <button class="btn" id="mostrarMejorEntrenamiento">
         Mostrar mejor entrenamiento
       </button>
       <button class="btn" id="mostrarTotales">Mostrar totales</button>
       <button class="btn" id="mostrarForo">Foro</button>
       <button class="btn" id="cerrarSesion">Cerrar sesión</button>
+      <button class="btn" id="TutorialBtn">Tutorial</button>
+    </div>
+
+    <div class="item tutorial oculto">
+      <p>
+        Pulsa en <strong>Añadir entrenamiento</strong>, para empezar a hacer el
+        registro.
+      </p>
+      <p>
+        Utiliza <strong>Mostrar entrenamientos</strong> para admistrar tus
+        registros.
+      </p>
+      <p>
+        Puedes ver tus mejores entrenamientos en
+        <strong>Mejor entrenamiento</strong> y tus totales en
+        <strong>Mostrar Totales</strong>.
+      </p>
+      <p>Utiliza el <strong>Foro</strong> para compartir tus experiencias.</p>
     </div>
 
     <section id="contenido">

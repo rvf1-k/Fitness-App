@@ -412,6 +412,10 @@ function listeners() {
     $(".blur").remove();
   });
 
+  $("#TutorialBtn").click(function(){
+      $(".tutorial").slideToggle()
+  })
+
   //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
   //document.getElementById("cerrarSesion").addEventListener("click", () => {
   $("#cerrarSesion").click(function () {
