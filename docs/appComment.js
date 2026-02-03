@@ -67,7 +67,7 @@ const Nivel = {
   MUYBUENO: "Muy bueno",
 };
 
-//TODO: JQuery do
+//TODO: JQuery
 class Entrenamiento {
   constructor(id, distancia, tiempo, tipo, fecha) {
     this.id = id;
@@ -227,7 +227,7 @@ function listeners() {
       );
       crearIndex();
     } else {
-      //TODO: JQuery do
+      //TODO: JQuery
       //registrar.classList.remove("oculto");
       $("#registrar").removeClass("oculto");
     }
@@ -242,7 +242,7 @@ function listeners() {
   $("#mostrarTotales").click(() => {
     show("totales");
   });
-  //TODO: JQuery do
+  //TODO: JQuery
   //* Muestra el form de radio para calcular los totales
   //document.getElementById("mostrarForo").addEventListener("click", () => {
   $("#mostrarForo").click(() => {
@@ -253,7 +253,7 @@ function listeners() {
   });
 
   //* Muestra todos los entrenamientos listados
-  //TODO: JQuery do
+  //TODO: JQuery
   //document.getElementById("mostrarEntrenamientos").addEventListener("click", () => {
   $("#mostrarEntrenamientos").click(function () {
     showInner(mostrarEntrenamientos());
@@ -278,7 +278,7 @@ function listeners() {
     show("mejorEntrenamiento");
   });
 
-  //TODO: JQuery do
+  //TODO: JQuery
   //* Control radio de los mejores entrenamientos
   //document.getElementById("mejorEntrenamiento").addEventListener("change", (e) => {
   $("#mejorEntrenamiento").on("change", (e) => {
@@ -302,7 +302,7 @@ function listeners() {
     showInner(contenido, false);
   });
 
-  //TODO: JQuery do
+  //TODO: JQuery
   //* Control radio de los totales
   //document.getElementById("totales").addEventListener("change", (e) => {
   $("#totales").on("change", function (e) {
@@ -322,7 +322,7 @@ function listeners() {
   $("#crearPersona").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery do
+    //TODO: JQuery
     if (crearPersona()) {
       //div_login.classList.remove("oculto");
       $("div_login").removeClass("oculto");
@@ -334,7 +334,7 @@ function listeners() {
   $("#crearUsuario").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery do
+    //TODO: JQuery
     if (crearUsuario()) {
       hider("form_persona");
 
@@ -401,7 +401,7 @@ function listeners() {
 
   En este caso se elimina el padre de el span, es decir el div que conforma el popup
   */
-  //TODO: JQuery do
+  //TODO: JQuery
   //document.querySelector(".cerrar")?.addEventListener("click", function () {
   //  this.parentElement.remove();
   //});
@@ -438,6 +438,7 @@ function listeners() {
     },
   });
 
+  //* Funcion con fade para mostrar un mensaje al pasar sobre mi nombre
   $(".me > .btn").on({
     mouseenter: function () {
       $("div.msg").fadeToggle("slow");
@@ -455,7 +456,7 @@ function listeners() {
  * - añadirEntrenamiento llama a ahoraDatetimeLocal() para darle el valor de la hora actual al input
  * - totales y mejorEntrenamiento, llaman a showInner() con un mensaje para que se seleccione el radio
  */
-//TODO: JQuery do
+//TODO: JQuery
 function show(id, hide = true) {
   if (hide) {
     hider(id);
@@ -488,7 +489,7 @@ function show(id, hide = true) {
 /**
  * El metodo muestra [section id=resultados] e imprime en este en String que llegue por @contenido , si se añade un false se mantienen los formularios y no se ocultan
  */
-//TODO: JQuery do
+//TODO: JQuery
 function showInner(contenido, hide = true) {
   //const resultadoInner = document.getElementById("resultados");
   //resultadoInner.innerHTML = "";
@@ -508,7 +509,7 @@ function showInner(contenido, hide = true) {
 /**
  * Este metodo oculta todos los formularios y reinicia la [section id=resultados]
  */
-//TODO: JQuery do
+//TODO: JQuery
 function hider(id = null) {
   //formularios_btn.classList.add("oculto");
   //foro.classList.add("oculto");
@@ -542,7 +543,7 @@ function hider(id = null) {
  *
  * Estos datos recogidos se añaden a localStorage
  */
-//TODO: JQuery do
+//TODO: JQuery
 function crearPersona() {
   //const persona = document.getElementById("form_persona");
 
@@ -643,7 +644,7 @@ function crearPersona() {
  * Se basa en la logica de crearPersona(), pero al haber campos que terminan compartiendo valor debo compararlos juntos y no se puede desde el foreach
  * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
  */
-//TODO: JQuery do
+//TODO: JQuery
 function crearEntrenamiento() {
   //const entrenamiento = document.getElementById("añadirEntrenamiento");
 
@@ -769,7 +770,7 @@ function crearEntrenamiento() {
 /*
   Comoparte la logica de crearPersona(), pero para crear los datos de la cuenta
 */
-//TODO: JQuery do
+//TODO: JQuery
 function crearUsuario() {
   //const login = document.getElementById("form_registro");
 
@@ -860,7 +861,7 @@ function ahoraDatetimeLocal() {
  * Por un forEach se van listando todos los entrenamientos en formato tabla
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
-//TODO: JQuery do
+//TODO: JQuery
 function mostrarEntrenamientos() {
   //const titulo = document.createElement("h2");
   //titulo.textContent = "Entrenamientos";
@@ -885,7 +886,7 @@ function mostrarEntrenamientos() {
 }
 
 // Metodo para crear la tabla para listar los entrenamientos
-//TODO: JQuery do
+//TODO: JQuery
 function createTable() {
   //const table = document.createElement("table");
   //const trTitulos = document.createElement("tr");
@@ -920,7 +921,7 @@ function createTable() {
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
 
-//TODO: JQuery do
+//TODO: JQuery
 function mejoresEntrenamientos(valor) {
   //const titulo = document.createElement("h2");
   //titulo.textContent = `Mejor entrenamiento ${valor}`;
@@ -974,7 +975,7 @@ function mejoresEntrenamientos(valor) {
  * Y se devuelve @contenido
  */
 
-//TODO: JQuery do
+//TODO: JQuery
 function totales(valor) {
   //const titulo = document.createElement("h2");
   //titulo.textContent = `Total ${valor}`;
@@ -1028,7 +1029,7 @@ function totales(valor) {
  * Esta función muestra y oculta la sección de iniciar sesión del resto de formularios de la app
  * Inprimiendo @usuario a traves de mostrarPersona()
  */
-//TODO: JQuery do
+//TODO: JQuery
 function crearIndex() {
   //inicio.classList.add("oculto");
   //div_login.classList.add("oculto");
@@ -1050,7 +1051,7 @@ function crearIndex() {
 /**
  * Esta función inprime los datos de @usuario con innerHTML en el [p id=datosPerfil] tras la configuración de crearIndex()
  */
-//TODO: JQuery do
+//TODO: JQuery
 function mostrarPersona() {
   //const p = document.getElementById("datosPerfil");
   //p.textContent = usuario.mostrarInfo();
@@ -1062,7 +1063,7 @@ function mostrarPersona() {
  * En el setInterval() cada 50s se ejecuta y se establece al src la imagen de @imgs
  * La variable @i funciona como indice, y en cada iteración suma uno, si es igual al tamaño del array se resetea a 0 y vuelve a empezar
  */
-//TODO: JQuery do
+//TODO: JQuery
 function imgs() {
   let i = 0;
   const imgs = [
@@ -1082,9 +1083,8 @@ function imgs() {
   }, 50000);
 }
 
-//TODO: JQuery do
-//TODO: Mucha mierda
-// Crea un popup que añade al html
+//TODO: JQuery
+//* Crea un popup que añade al html
 function createPopup() {
   //let popup = document.createElement("div");
   //popup.classList.add("popup");
@@ -1118,6 +1118,8 @@ function createPopup() {
   //document.body.appendChild(popup);
   $("body").append(blur);
 
+  //* Aquí comienza su animación, rotar() lo pone a guirar de forma continua
+  //* Con los siguientes metodos se itera y se realizan las animaciones en cadena.
   let rotacion = { deg: 0 };
   rotar(rotacion);
   popupInicio(popup);
@@ -1130,6 +1132,8 @@ function createPopup() {
 
   popupSalir(popup, rotacion);
 
+  //* Al hacer click en el div que ocupa toda la pantalla, si se pulsa durante la anim está se detiene 
+  //* Pone el popup centrado
   $(blur).click(function () {
     let alto = $(window).height() - $(popup).outerHeight();
     let ancho = $(window).width() - $(popup).outerWidth();
@@ -1152,7 +1156,9 @@ function rotar(rotacion) {
     },
   );
 }
-
+//* El inicio de la anim
+//* En todos para poder hacerlo relativo a la pantalla se resta el tamaño de la pantalla al popup
+//* En cada metodo se piden de nuevo, por si el layout ha cambiado
 function popupInicio(popup) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1202,7 +1208,7 @@ function popupCentrifuga(popup, iterar) {
  * Añade las publicaciones al foro de la web, el nickName se usa de forma predeterminado el introducido como usuario,
  * pero como se solicitaba en la practica añadir un campo para nick, este se puede modificar
  */
-//TODO: JQuery do
+//TODO: JQuery
 function publicarPost() {
   //const textarea = document.getElementById("opinion");
   //const nick = document.getElementById("nick");
@@ -1262,11 +1268,11 @@ function publicarPost() {
  * Hace toggle entre el tema oscuro y los logos del button, guarda la ultima acción en localStorage
  */
 function addDarkTheme() {
-  //TODO: JQuery do
+  //TODO: JQuery
   //let dark = document.body.classList.toggle("dark");
   let dark = $("body").toggleClass("dark");
 
-  //TODO: JQuery do
+  //TODO: JQuery
   //let btn = document.getElementById("toggleTheme").children[0];
   //btn.classList.toggle("fa-moon");
   //btn.classList.toggle("fa-sun");
@@ -1303,7 +1309,7 @@ $(document).ready(function () {
     addDarkTheme();
   }
   if (localStorage?.sesion) {
-    //TODO: JQuery do
+    //TODO: JQuery
     //document.getElementById("mostrarForm").innerHTML = "Iniciar";
     $("#mostrarForm").text("Iniciar");
   } else {

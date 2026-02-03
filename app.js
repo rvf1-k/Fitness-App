@@ -67,7 +67,6 @@ const Nivel = {
   MUYBUENO: "Muy bueno",
 };
 
-//TODO: JQuery do
 class Entrenamiento {
   constructor(id, distancia, tiempo, tipo, fecha) {
     this.id = id;
@@ -166,7 +165,6 @@ class Entrenamiento {
   }
 
   mostrarInfo() {
-    //const tr = document.createElement("tr");
     const tr = $("<tr>");
 
     const content = [
@@ -179,21 +177,13 @@ class Entrenamiento {
     ];
 
     content.forEach((elemento) => {
-      //const td = document.createElement("td");
-      //td.innerHTML = elemento;
-      //tr.appendChild(td);
       tr.append($("<td>").html(elemento));
     });
 
-    //const td = document.createElement("td");
-    //td.innerHTML =
-    //  '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>';
     const td = $("<td>").html(
       '<button class="eliminar btn" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
     );
 
-    //tr.appendChild(td);
-    //tr.dataset.id = this.id;
     tr.append(td);
     tr.attr("data-id", this.id);
 
@@ -206,7 +196,6 @@ class Entrenamiento {
  */
 function listeners() {
   //* Muestra el form de crear usuario tras pulsar Iniciar sesión
-  //document.getElementById("mostrarForm").addEventListener("click", () => {
   $("#mostrarForm").click(() => {
     if (localStorage?.sesion) {
       const nomUsuario = localStorage.usuario;
@@ -227,43 +216,31 @@ function listeners() {
       );
       crearIndex();
     } else {
-      //TODO: JQuery do
-      //registrar.classList.remove("oculto");
       $("#registrar").removeClass("oculto");
     }
   });
 
   //* Muestra el form de añadir entrenamiento
-  //document.getElementById("mostrarAñadirEntrenamiento").addEventListener("click", () => show("añadirEntrenamiento"));
   $("#mostrarAñadirEntrenamiento").click(() => show("añadirEntrenamiento"));
 
   //* Muestra el form de radio para calcular los totales
-  //document.getElementById("mostrarTotales").addEventListener("click", () => {
   $("#mostrarTotales").click(() => {
     show("totales");
   });
-  //TODO: JQuery do
+
   //* Muestra el form de radio para calcular los totales
-  //document.getElementById("mostrarForo").addEventListener("click", () => {
   $("#mostrarForo").click(() => {
     show("foro_form");
     show("foro", false);
-    //document.getElementById("nick").placeholder = "Nick de usuario: " + localStorage.usuario;
     $("#nick").attr("placeholder", "Nick de usuario: " + localStorage.usuario);
   });
 
   //* Muestra todos los entrenamientos listados
-  //TODO: JQuery do
-  //document.getElementById("mostrarEntrenamientos").addEventListener("click", () => {
   $("#mostrarEntrenamientos").click(function () {
     showInner(mostrarEntrenamientos());
 
-    //const borrarBtn = document.querySelectorAll(".eliminar");
-    //borrarBtn.forEach((btn) => {
     $(".eliminar").click(function () {
-      //btn.addEventListener("click", function () {
       const tr = $(this).closest("tr");
-      //const id = tr.dataset.id;
       const id = tr.attr("data-id");
 
       usuario.eliminarEntrenamiento(id);
@@ -273,14 +250,11 @@ function listeners() {
   });
 
   //* Muestra form Mejor Entrenamiento
-  //document.getElementById("mostrarMejorEntrenamiento").addEventListener("click", () => {show("mejorEntrenamiento");});
   $("#mostrarMejorEntrenamiento").click(() => {
     show("mejorEntrenamiento");
   });
 
-  //TODO: JQuery do
   //* Control radio de los mejores entrenamientos
-  //document.getElementById("mejorEntrenamiento").addEventListener("change", (e) => {
   $("#mejorEntrenamiento").on("change", (e) => {
     let contenido;
 
@@ -302,9 +276,7 @@ function listeners() {
     showInner(contenido, false);
   });
 
-  //TODO: JQuery do
   //* Control radio de los totales
-  //document.getElementById("totales").addEventListener("change", (e) => {
   $("#totales").on("change", function (e) {
     let contenido;
 
@@ -314,33 +286,24 @@ function listeners() {
   });
 
   //* Añadir entrenamiento
-  //document.getElementById("crearEntrenamiento").addEventListener("click", crearEntrenamiento);
   $("#crearEntrenamiento").click(crearEntrenamiento);
 
   //* Crear Persona
-  //document.getElementById("crearPersona").addEventListener("click", () => {
   $("#crearPersona").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery do
     if (crearPersona()) {
-      //div_login.classList.remove("oculto");
       $("div_login").removeClass("oculto");
       crearIndex();
     }
   });
   //* Crear usuario
-  //document.getElementById("crearUsuario").addEventListener("click", () => {
   $("#crearUsuario").click(function () {
     //* Si es true, se cambian los display de los formularios
 
-    //TODO: JQuery do
     if (crearUsuario()) {
       hider("form_persona");
 
-      //registrar.classList.add("oculto");
-      //inicio.classList.add("oculto");
-      //div_login.classList.remove("oculto");
       $("#registrar").addClass("oculto");
       $("#inicio").addClass("oculto");
       $("#div_login").removeClass("oculto");
@@ -357,10 +320,6 @@ function listeners() {
 
   En este caso se elimina el padre de el span, es decir el div que conforma el popup
   */
-  //TODO: JQuery do
-  //document.querySelector(".cerrar")?.addEventListener("click", function () {
-  //  this.parentElement.remove();
-  //});
   $(".cerrar").click(function () {
     $(".blur").remove();
   });
@@ -370,18 +329,15 @@ function listeners() {
   })
 
   //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
-  //document.getElementById("cerrarSesion").addEventListener("click", () => {
   $("#cerrarSesion").click(function () {
     localStorage.clear();
     location.reload();
   });
 
   //* Cambia el tema entre oscuro y blanco
-  //document.getElementById("toggleTheme").addEventListener("click", addDarkTheme);
   $("#toggleTheme").click(addDarkTheme);
 
   //* Añade publicaciones al foro
-  //document.getElementById("publicarPost").addEventListener("click", publicarPost);
   $("#publicarPost").click(publicarPost);
 
   //* Hace visible las flechas del carrusel
@@ -412,27 +368,20 @@ function listeners() {
  * - añadirEntrenamiento llama a ahoraDatetimeLocal() para darle el valor de la hora actual al input
  * - totales y mejorEntrenamiento, llaman a showInner() con un mensaje para que se seleccione el radio
  */
-//TODO: JQuery do
 function show(id, hide = true) {
   if (hide) {
     hider(id);
   }
-  //formularios_btn.classList.remove("oculto");
   $("#formularios_btn").removeClass("oculto");
 
-  //const elemento = document.getElementById(id);
-  //elemento.classList.remove("oculto");
   $(`#${id}`).removeClass("oculto");
 
   switch (id) {
     case "añadirEntrenamiento":
-      //elemento.fechaEntrenamiento.value = ahoraDatetimeLocal();
       $(`#${id} #fechaEntrenamiento`).val(ahoraDatetimeLocal());
       break;
     case "totales":
     case "mejorEntrenamiento":
-      //const text = document.createElement("p");
-      //text.textContent = "Selecciona una de las categorias";
       const text = $("<p>").text("Selecciona una de las categorias");
       showInner([text], false);
       break;
@@ -445,19 +394,14 @@ function show(id, hide = true) {
 /**
  * El metodo muestra [section id=resultados] e imprime en este en String que llegue por @contenido , si se añade un false se mantienen los formularios y no se ocultan
  */
-//TODO: JQuery do
 function showInner(contenido, hide = true) {
-  //const resultadoInner = document.getElementById("resultados");
-  //resultadoInner.innerHTML = "";
   const resultadoInner = $("#resultados");
   resultadoInner.text("");
   if (hide) {
     hider();
   }
-  //resultadoInner.classList.remove("oculto");
   resultadoInner.removeClass("oculto");
   contenido.forEach((elemento) => {
-    //resultadoInner.appendChild(elemento);
     resultadoInner.append(elemento);
   });
 }
@@ -465,24 +409,12 @@ function showInner(contenido, hide = true) {
 /**
  * Este metodo oculta todos los formularios y reinicia la [section id=resultados]
  */
-//TODO: JQuery do
 function hider(id = null) {
-  //formularios_btn.classList.add("oculto");
-  //foro.classList.add("oculto");
   $("#formularios_btn").addClass("oculto");
   $("#foro").addClass("oculto");
 
-  //const resultadoInner = document.getElementById("resultados");
-  //resultados.classList.add("oculto");
-  //resultadoInner.innerHTML = "";
   $("#resultados").addClass("oculto").text("");
 
-  //const forms = document.querySelectorAll("form");
-  //forms.forEach((form) => {
-  //  if (id != form.id) {
-  //    form.classList.add("oculto");
-  //  }
-  //});
   $("form")
     .not("#" + id)
     .addClass("oculto");
@@ -499,41 +431,30 @@ function hider(id = null) {
  *
  * Estos datos recogidos se añaden a localStorage
  */
-//TODO: JQuery do
 function crearPersona() {
-  //const persona = document.getElementById("form_persona");
 
   let ultimatum = true;
   let mensajes = [];
-  //persona.querySelectorAll("input").forEach((input) => {
   $("#form_persona input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    //switch (input.id) {
     switch (this.id) {
       case "nombre":
-        //error = !comprobarRegex(/^[\w]{3,}$/, input.value);
         error = !comprobarRegex(/^[\w]{3,}$/, $(this).val());
         tempMsj = "Debe contener el nombre menos 3 caracteres";
         break;
       case "correo":
-        //error = !comprobarRegex(/^[\w]{1,}@[\w]{1,}.[\w]{1,}$/, input.value);
         error = !comprobarRegex(/^[\w]{1,}@[\w]{1,}.[\w]{1,}$/, $(this).val());
         tempMsj = "Introduce un correo valido";
         break;
       case "altura":
       case "peso":
-        //error = !comprobarRegex(/^[\d]{1,}$/, input.value);
         error = !comprobarRegex(/^[\d]{1,}$/, $(this).val());
-        //tempMsj = "Introduce un valor valido en " + input.id;
         tempMsj = "Introduce un valor valido en " + $(this).val();
         break;
       case "fecha_nacimiento":
         error =
-          //input.value == "" ||
-          //input.value == null ||
-          //new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
           $(this).val() == "" ||
           $(this).val() == null ||
           new Date($(this).val()) > new Date(); //* Comprobar que la fecha no es posterior
@@ -542,31 +463,20 @@ function crearPersona() {
     }
 
     if (error) {
-      //input.value = "";
-      //const error = document.createElement("p");
-      //error.textContent = `[ERROR] - ${tempMsj}`;
-      //error.classList.add("p-error");
       $(this).val("");
       const error = $("<p>").text(`[ERROR] - ${tempMsj}`).addClass("p-error");
       mensajes.push(error);
 
-      //input.className = "input-error";
       $(this).removeClass("input-normal");
       $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      //input.className = "input-normal";
       $(this).removeClass("input-error");
       $(this).addClass("input-normal");
     }
   });
 
   if (ultimatum) {
-    //const correo = persona.correo.value;
-    //const nombre = persona.nombre.value;
-    //const altura = persona.altura.value;
-    //const peso = persona.peso.value;
-    //const fechaNacimiento = new Date(persona.fecha_nacimiento.value);
     const correo = $("#form_persona #correo").val();
     const nombre = $("#form_persona #nombre").val();
     const altura = $("#form_persona #altura").val();
@@ -588,7 +498,6 @@ function crearPersona() {
     localStorage.nombre = nombre;
     localStorage.altura = altura;
     localStorage.peso = peso;
-    //localStorage.fechaNacimiento = persona.fecha_nacimiento.value;
     localStorage.fechaNacimiento = $("#form_persona #fecha_nacimiento").val();
   } else {
     showInner(mensajes, false);
@@ -600,31 +509,22 @@ function crearPersona() {
  * Se basa en la logica de crearPersona(), pero al haber campos que terminan compartiendo valor debo compararlos juntos y no se puede desde el foreach
  * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
  */
-//TODO: JQuery do
 function crearEntrenamiento() {
-  //const entrenamiento = document.getElementById("añadirEntrenamiento");
 
   let mensajes = [];
   let ultimatum = true;
-  //entrenamiento.querySelectorAll("input").forEach((input) => {
   $("#añadirEntrenamiento input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    //switch (input.id) {
     switch (this.id) {
       case "distanciaInput":
-        //error = input.value < 0 || input.value == null || input.value == "";
-        //tempMsj = "Introduce un valor valido en " + input.id;
         error =
           $(this).val() < 0 || $(this).val() == null || $(this).val() == "";
         tempMsj = "Introduce un valor valido en " + $(this).val();
         break;
       case "fechaEntrenamiento":
         error =
-          //input.value == "" ||
-          //input.value == null ||
-          //new Date(input.value) > new Date(); //* Comprobar que la fecha no es posterior
           $(this).val() == "" ||
           $(this).val() == null ||
           new Date($(this).val()) > new Date(); //* Comprobar que la fecha no es posterior
@@ -634,27 +534,17 @@ function crearEntrenamiento() {
         break;
     }
     if (error) {
-      //input.value = "";
-      //const error = document.createElement("p");
-      //error.textContent = `[ERROR] - ${tempMsj}`;
-      //error.classList.add("p-error");
       $(this).val("");
       const error = $("<p>").text(`[ERROR] - ${tempMsj}`).addClass("p-error");
       mensajes.push(error);
 
-      //input.className = "input-error";
       $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      //input.className = "input-normal";
       $(this).addClass("input-normal");
     }
   });
 
-  //const distancia = Number(entrenamiento.distanciaInput.value);
-  //const horas = Number(entrenamiento.horas.value);
-  //const minutos = Number(entrenamiento.minutos.value);
-  //const tiempo = horas * 60 + minutos; //* min
   const distancia = Number($("#añadirEntrenamiento #distanciaInput").val());
   const horas = Number($("#añadirEntrenamiento #horas").val());
   const minutos = Number($("#añadirEntrenamiento #minutos").val());
@@ -662,42 +552,30 @@ function crearEntrenamiento() {
 
   //* Para controlar el tiempo, por si los dos tienen valor 0 o negativo.
   if (tiempo <= 0) {
-    //const errorTiempo = document.createElement("p");
-    //errorTiempo.textContent = `[ERROR] - Introdocude un tiempo valido`;
-    //errorTiempo.classList.add("p-error");
     const errorTiempo = $("<p>")
       .text(`[ERROR] - Introdocude un tiempo valido`)
       .addClass("p-error");
     mensajes.push(errorTiempo);
 
-    //entrenamiento.horas.className = "input-error";
-    //entrenamiento.minutos.className = "input-error";
     $("#añadirEntrenamiento #horas").addClass("input-error");
     $("#añadirEntrenamiento #minutos").addClass("input-error");
     ultimatum = false;
   }
 
   //* Para controlar el tipo, por si no hay.
-  //const tipo = tipoActividad.value;
   const tipo = $("#tipoActividad").val();
   if (tipo == "" || tipo == null) {
-    //const errorTipo = document.createElement("p");
-    //errorTipo.textContent = `[ERROR] - Introdocude el tipo de entrenamiento`;
-    //errorTipo.classList.add("p-error");
     const errorTipo = $("<p>")
       .text(`[ERROR] - Introdocude el tipo de entrenamiento`)
       .addClass("p-error");
     mensajes.push(errorTipo);
 
-    //entrenamiento.tipoActividad.className = "input-error";
     $("#añadirEntrenamiento #tipoActividad").addClass("input-error");
     ultimatum = false;
   } else {
-    //entrenamiento.tipoActividad.className = "input-normal";
     $("#añadirEntrenamiento #tipoActividad").addClass("input-normal");
   }
 
-  //const fecha = new Date(entrenamiento.fechaEntrenamiento.value);
   const fecha = new Date($("#añadirEntrenamiento #fechaEntrenamiento").val());
 
   if (ultimatum) {
@@ -705,11 +583,6 @@ function crearEntrenamiento() {
       new Entrenamiento(usuario.nextId(), distancia, tiempo, tipo, fecha),
     );
 
-    //let p = document.createElement("p");
-    //p.classList.add("p-exito");
-    //p.textContent = `Entrenamiento ${
-    //  usuario.getEntrenamientos().length
-    //}º creado (pulsa Mostrar entrenamientos para ver tus entrenamientos)`;
     const p = $("<p>")
       .addClass("p-exito")
       .text(
@@ -726,28 +599,22 @@ function crearEntrenamiento() {
 /*
   Comoparte la logica de crearPersona(), pero para crear los datos de la cuenta
 */
-//TODO: JQuery do
 function crearUsuario() {
-  //const login = document.getElementById("form_registro");
 
   let ultimatum = true;
   let mensajes = [];
-  //login.querySelectorAll("input").forEach((input) => {
   $("#form_registro input").each(function () {
     let error = false;
     let tempMsj = "";
 
-    //switch (input.id)) {
     switch (this.id) {
       case "usuario":
-        //error = !comprobarRegex(/^[\w]{3,}$/, input.value);
         error = !comprobarRegex(/^[\w]{3,}$/, $(this).val());
         tempMsj = "Debe contener el nombre de usuario al menos 3 caracteres";
         break;
       case "password":
         error = !comprobarRegex(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-          //input.value
           $(this).val(),
         );
         tempMsj =
@@ -756,30 +623,22 @@ function crearUsuario() {
     }
 
     if (error) {
-      //input.value = "";
       $(this).val("");
-      //const error = document.createElement("p");
-      //error.textContent = `[ERROR] - ${tempMsj}`;
-      //error.classList.add("p-error");
       const errorPush = $("<p>")
         .text(`[ERROR] - ${tempMsj}`)
         .addClass("p-error");
       mensajes.push(errorPush);
 
-      //input.className = "input-error";
       $(this).removeClass("input-normal");
       $(this).addClass("input-error");
       ultimatum = false;
     } else {
-      //input.className = "input-normal";
       $(this).removeClass("input-error");
       $(this).addClass("input-normal");
     }
   });
 
   if (ultimatum) {
-    //localStorage.usuario = login.usuario.value;
-    //localStorage.password = login.password.value;
     localStorage.usuario = $("#form_registro #usuario").val();
     localStorage.password = $("#form_registro #password").val();
   } else {
@@ -817,24 +676,17 @@ function ahoraDatetimeLocal() {
  * Por un forEach se van listando todos los entrenamientos en formato tabla
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
-//TODO: JQuery do
 function mostrarEntrenamientos() {
-  //const titulo = document.createElement("h2");
-  //titulo.textContent = "Entrenamientos";
   const titulo = $("<h2>").text("Entrenamientos");
 
   if (usuario.getEntrenamientos().length == 0) {
-    //const texto = document.createElement("p");
-    //texto.textContent = "No hay entrenamientos";
     const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
   } else {
-    //let table = createTable();
     const table = createTable();
 
     usuario.getEntrenamientos().forEach((entrenamiento) => {
-      //table.appendChild(entrenamiento.mostrarInfo()); // ya devuelve <tr> completo
       table.append(entrenamiento.mostrarInfo()); // ya devuelve <tr> completo
     });
     return (contenido = [titulo, table]);
@@ -842,10 +694,7 @@ function mostrarEntrenamientos() {
 }
 
 // Metodo para crear la tabla para listar los entrenamientos
-//TODO: JQuery do
 function createTable() {
-  //const table = document.createElement("table");
-  //const trTitulos = document.createElement("tr");
   const table = $("<table>");
   const trTitulos = $("<tr>");
 
@@ -860,13 +709,9 @@ function createTable() {
   ];
 
   headers.forEach((text) => {
-    //const th = document.createElement("th");
-    //th.textContent = text;
-    //trTitulos.appendChild(th);
     trTitulos.append($("<th>").text(text));
   });
 
-  //table.appendChild(trTitulos);
   return table.append(trTitulos);
 }
 
@@ -877,15 +722,10 @@ function createTable() {
  * Y se devuelve @contenido con su contenido mostrado por mostrarInfo()
  */
 
-//TODO: JQuery do
 function mejoresEntrenamientos(valor) {
-  //const titulo = document.createElement("h2");
-  //titulo.textContent = `Mejor entrenamiento ${valor}`;
   const titulo = $("<h2>").text(`Mejor entrenamiento ${valor}`);
 
   if (usuario.getEntrenamientos().length == 0) {
-    //const texto = document.createElement("p");
-    //texto.textContent = "No hay entrenamientos";
     const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
@@ -916,7 +756,6 @@ function mejoresEntrenamientos(valor) {
 
     const table = createTable();
 
-    //table.appendChild(mejorMarca.mostrarInfo());
     table.append(mejorMarca.mostrarInfo());
 
     return (contenido = [titulo, table]);
@@ -931,15 +770,10 @@ function mejoresEntrenamientos(valor) {
  * Y se devuelve @contenido
  */
 
-//TODO: JQuery do
 function totales(valor) {
-  //const titulo = document.createElement("h2");
-  //titulo.textContent = `Total ${valor}`;
   const titulo = $("<h2>").text(`Total ${valor}`);
 
   if (usuario.getEntrenamientos().length == 0) {
-    //const texto = document.createElement("p");
-    //texto.textContent = "No hay entrenamientos";
     const texto = $("<p>").text("No hay entrenamientos");
 
     return (contenido = [titulo, texto]);
@@ -960,18 +794,13 @@ function totales(valor) {
       }
     });
 
-    //let texto;
     const texto = $("<p>");
 
     switch (valor) {
       case "tiempo":
-        //texto = document.createElement("p");
-        //texto.textContent = `Total min entrenando: ${total} min`;
         texto.text(`Total min entrenando: ${total} min`);
         break;
       case "distancia":
-        //texto = document.createElement("p");
-        //texto.textContent = `Total min entrenando: ${total} min`;
         texto.text(`Total min entrenando: ${total} min`);
         break;
       default:
@@ -985,17 +814,10 @@ function totales(valor) {
  * Esta función muestra y oculta la sección de iniciar sesión del resto de formularios de la app
  * Inprimiendo @usuario a traves de mostrarPersona()
  */
-//TODO: JQuery do
 function crearIndex() {
-  //inicio.classList.add("oculto");
-  //div_login.classList.add("oculto");
   $("#inicio").addClass("oculto");
   $("#div_login").addClass("oculto");
 
-  //btn.classList.remove("oculto");
-  //perfil.classList.remove("oculto");
-  //formularios_btn.classList.remove("oculto");
-  //resultados.classList.add("oculto");
   $("#btn").removeClass("oculto");
   $("#perfil").removeClass("oculto");
   $("#formularios_btn").removeClass("oculto");
@@ -1007,10 +829,7 @@ function crearIndex() {
 /**
  * Esta función inprime los datos de @usuario con innerHTML en el [p id=datosPerfil] tras la configuración de crearIndex()
  */
-//TODO: JQuery do
 function mostrarPersona() {
-  //const p = document.getElementById("datosPerfil");
-  //p.textContent = usuario.mostrarInfo();
   const p = $("#datosPerfil").html(usuario.mostrarInfo());
 }
 
@@ -1019,7 +838,6 @@ function mostrarPersona() {
  * En el setInterval() cada 50s se ejecuta y se establece al src la imagen de @imgs
  * La variable @i funciona como indice, y en cada iteración suma uno, si es igual al tamaño del array se resetea a 0 y vuelve a empezar
  */
-//TODO: JQuery do
 function imgs() {
   let i = 0;
   const imgs = [
@@ -1028,50 +846,31 @@ function imgs() {
     "img/20210203-1024x684_1200x802.webp",
     "img/strong_men.jpg",
   ];
-  //document.querySelector("img").src = imgs[i];
   const img = $("img").attr("src", imgs[i]);
 
   setInterval(() => {
-    //document.querySelector("img").src = imgs[i++];
     img.attr("src", imgs[i++]);
 
     if (i == imgs.length) i = 0;
   }, 50000);
 }
 
-//TODO: JQuery do
 //* Crea un popup que añade al html
 function createPopup() {
-  //let popup = document.createElement("div");
-  //popup.classList.add("popup");
   const popup = $("<div>").addClass("popup item");
 
-  //let equis = document.createElement("i");
-  //equis.classList.add("fa-solid");
-  //equis.classList.add("fa-xmark");
   const equis = $("<i>").addClass("fa-solid fa-xmark");
 
-  //let cerrar = document.createElement("span");
-  //cerrar.classList.add("cerrar");
-  //cerrar.appendChild(equis);
   const cerrar = $("<span>").addClass("cerrar").append(equis);
 
-  //let titulo = document.createElement("h2");
-  //titulo.textContent = "Bienvenido🙋";
   const titulo = $("<h2>").text("Bienvenido🙋");
 
-  //let contenido = document.createElement("p");
-  //contenido.textContent = "Bienvenido al nuevo FITNESS APP :D";
   const contenido = $("<p>").text("Bienvenido al nuevo JQ-FITNESS APP :D");
 
-  //popup.appendChild(cerrar);
-  //popup.appendChild(titulo);
-  //popup.appendChild(contenido);
   const blur = $("<div>")
     .addClass("blur")
     .append(popup.append(cerrar).append(titulo).append(contenido));
 
-  //document.body.appendChild(popup);
   $("body").append(blur);
 
   //* Aquí comienza su animación, rotar() lo pone a guirar de forma continua
@@ -1164,38 +963,25 @@ function popupCentrifuga(popup, iterar) {
  * Añade las publicaciones al foro de la web, el nickName se usa de forma predeterminado el introducido como usuario,
  * pero como se solicitaba en la practica añadir un campo para nick, este se puede modificar
  */
-//TODO: JQuery do
 function publicarPost() {
-  //const textarea = document.getElementById("opinion");
-  //const nick = document.getElementById("nick");
   const textarea = $("#opinion");
   const nick = $("#nick");
 
   let nickName = localStorage.usuario;
 
-  //if (textarea.value == "") {
   if (textarea.val() == "") {
-    //textarea.placeholder = "[ERROR] - No hay contenido en el post";
-    //textarea.classList.add("input-error");
     textarea
       .attr("placeholder", "[ERROR] - No hay contenido en el post")
       .addClass("input-error");
     return;
   } else {
-    //textarea.placeholder = "Opinion..";
-    //textarea.classList.remove("input-error");
     textarea.attr("placeholder", "Opinion..").removeClass("input-error");
   }
 
-  //if (nick.value != "") {
-  //  nickName = nick.value;
-  //}
   if (nick.val() != "") {
     nickName = nick.val();
   }
 
-  //const divNode = document.createElement("div");
-  //divNode.classList.add("post");
   const divNode = $("<div>").addClass("post");
 
   const userPost = $("<p>")
@@ -1208,7 +994,6 @@ function publicarPost() {
 
   $("#foro").prepend(divNode);
 
-  //textarea.value = "";
   textarea.text();
 }
 
