@@ -189,7 +189,7 @@ class Entrenamiento {
     //td.innerHTML =
     //  '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>';
     const td = $("<td>").html(
-      '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
+      '<button class="eliminar btn" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
     );
 
     //tr.appendChild(td);
@@ -348,50 +348,6 @@ function listeners() {
   });
 
   /*
-  *Forma parte de la primera versión de la practica realizada en  el tema 4, he considerado más optimo utilizar las propiedades CSS
-
-  const inputs = document.querySelectorAll("input, select");
-
-  inputs.forEach((el) => {
-    el.addEventListener("focus", () => {
-      el.style.borderColor = "#888";
-      el.style.boxShadow = "0 0 5px rgba(100,100,100,0.3)";
-      el.style.transition = "border 0.3s, box-shadow 0.3s";
-    });
-
-    el.addEventListener("blur", () => {
-      el.style.borderColor = "#ccc";
-      el.style.boxShadow = "none";
-    });
-  });
-  
-  const buttons = document.querySelectorAll("button");
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("mouseover", () => {
-      btn.style.backgroundColor = "rgb(241, 241, 241)";
-      btn.style.transform = "translateY(-1px)";
-      btn.style.transition = "transform 0.2s, background-color 0.2s";
-    });
-
-    btn.addEventListener("mouseout", () => {
-      btn.style.backgroundColor = "";
-      btn.style.transform = "none";
-    });
-
-    btn.addEventListener("mousedown", () => {
-      btn.style.backgroundColor = "rgb(194, 194, 194)";
-      btn.style.transform = "translateY(1px)";
-    });
-
-    btn.addEventListener("mouseup", () => {
-      btn.style.backgroundColor = "rgb(241, 241, 241)";
-      btn.style.transform = "translateY(-1px)";
-    });
-  });
-*/
-
-  /*
   * Si se un elemento con la clase .cerrar, es decir la X del popup se le añade un listener.
   Esto se debe a que solo aparece mientras no se haya iniciado sesión.
 
@@ -438,6 +394,7 @@ function listeners() {
     },
   });
 
+  //* Funcion con fade para mostrar un mensaje al pasar sobre mi nombre
   $(".me > .btn").on({
     mouseenter: function () {
       $("div.msg").fadeToggle("slow");
@@ -1083,8 +1040,7 @@ function imgs() {
 }
 
 //TODO: JQuery do
-//TODO: Mucha mierda
-// Crea un popup que añade al html
+//* Crea un popup que añade al html
 function createPopup() {
   //let popup = document.createElement("div");
   //popup.classList.add("popup");
@@ -1118,6 +1074,8 @@ function createPopup() {
   //document.body.appendChild(popup);
   $("body").append(blur);
 
+  //* Aquí comienza su animación, rotar() lo pone a guirar de forma continua
+  //* Con los siguientes metodos se itera y se realizan las animaciones en cadena.
   let rotacion = { deg: 0 };
   rotar(rotacion);
   popupInicio(popup);
@@ -1130,6 +1088,8 @@ function createPopup() {
 
   popupSalir(popup, rotacion);
 
+  //* Al hacer click en el div que ocupa toda la pantalla, si se pulsa durante la anim está se detiene 
+  //* Pone el popup centrado
   $(blur).click(function () {
     let alto = $(window).height() - $(popup).outerHeight();
     let ancho = $(window).width() - $(popup).outerWidth();
@@ -1152,7 +1112,9 @@ function rotar(rotacion) {
     },
   );
 }
-
+//* El inicio de la anim
+//* En todos para poder hacerlo relativo a la pantalla se resta el tamaño de la pantalla al popup
+//* En cada metodo se piden de nuevo, por si el layout ha cambiado
 function popupInicio(popup) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1163,6 +1125,7 @@ function popupInicio(popup) {
     .animate({ bottom: alto / 2, left: ancho / 8 }, "slow");
 }
 
+//* Animación final, se pone en posición
 function popupSalir(popup, rotacion) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1179,6 +1142,7 @@ function popupSalir(popup, rotacion) {
     .animate({ left: ancho / 2, bottom: alto / 2 }, "slow");
 }
 
+//* Esta animación se itera, es la que hace girar al rededor de la pantalla
 function popupCentrifuga(popup, iterar) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1234,22 +1198,14 @@ function publicarPost() {
   //divNode.classList.add("post");
   const divNode = $("<div>").addClass("post");
 
-  //const userPost = document.createElement("p");
-  //userPost.classList.add("user");
-  //userPost.textContent = nickName + " • " + new Date().toLocaleString();
   const userPost = $("<p>")
     .addClass("user")
     .text(`${nickName} • ${new Date().toLocaleString()}`);
 
-  //const textoPost = document.createElement("p");
-  //textoPost.classList.add("texto");
-  //textoPost.textContent = textarea.value;
   const textoPost = $("<p>").addClass("texto").text(textarea.val());
 
   divNode.append(userPost).append(textoPost);
 
-  //const foroDiv = document.getElementById("foro");
-  //foroDiv.insertBefore(divNode, foroDiv.children[0]);
   $("#foro").prepend(divNode);
 
   //textarea.value = "";
@@ -1260,20 +1216,15 @@ function publicarPost() {
  * Hace toggle entre el tema oscuro y los logos del button, guarda la ultima acción en localStorage
  */
 function addDarkTheme() {
-  //TODO: JQuery do
-  //let dark = document.body.classList.toggle("dark");
   let dark = $("body").toggleClass("dark");
 
-  //TODO: JQuery do
-  //let btn = document.getElementById("toggleTheme").children[0];
-  //btn.classList.toggle("fa-moon");
-  //btn.classList.toggle("fa-sun");
   $("#toggleTheme i").toggleClass("fa-moon");
   $("#toggleTheme i").toggleClass("fa-sun");
 
   localStorage.darkTheme = dark;
 }
 
+//! Deprecated: Este metodo servia para actualizar las imagenes
 function carruselImagenes() {
   Carousel(
     document.getElementById("myCarousel"),
@@ -1300,8 +1251,6 @@ $(document).ready(function () {
     addDarkTheme();
   }
   if (localStorage?.sesion) {
-    //TODO: JQuery do
-    //document.getElementById("mostrarForm").innerHTML = "Iniciar";
     $("#mostrarForm").text("Iniciar");
   } else {
     createPopup();

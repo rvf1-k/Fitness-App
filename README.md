@@ -3,11 +3,17 @@
 
 ### Refractorización
 
-Toda la logica ha sido actualizada con Jquery, incluyendo el contenido dinamico.
+- Toda la logica ha sido actualizada con Jquery, incluyendo el contenido dinamico.
+
+  En [docs](https://github.com/rvf1-k/Fitness-App/blob/8e32ac70ce6f16aaeda3ab7142c6bf648a532001/docs) se encuentra el codigo anterior de [app.js](https://github.com/rvf1-k/Fitness-App/blob/8e32ac70ce6f16aaeda3ab7142c6bf648a532001/app.js) comentado, pudiendo ver el traspaso de su logica.
+
+- Mejora de clases con `.item` y `.btn`, para separar los estilos entre divs y botones.
 
 ### Animación de inicio
 
-Al acceder a la web por primera vez, el *popup* que daba la bienvenida está tiene animaciones realizadas con Jquery.
+Al acceder a la web por primera vez, el *popup* que daba la bienvenida tiene animaciones realizadas con Jquery.
+
+Se utilizan los metodos `height()` y `outerHeight()` para calcular la animación en base a la pantalla.
 
 ### Slide
 
@@ -21,9 +27,7 @@ Se ha incluido mi nombre en forma de botón en la zona superior, cuando el rató
 
 Las imagenes tienen integradas [fancybox](https://fancyapps.com/fancybox/) y [carousel](https://fancyapps.com/carousel/).
 
-De este se ha utilizado el metodo css para que solo aparezcan las flechas cuando estás sobre su contenedor.
-
-
+En este se ha utilizado el metodo css para que solo aparezcan las flechas cuando estás sobre su contenedor.
 
 ---
 

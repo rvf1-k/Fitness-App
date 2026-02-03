@@ -189,7 +189,7 @@ class Entrenamiento {
     //td.innerHTML =
     //  '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>';
     const td = $("<td>").html(
-      '<button class="eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
+      '<button class="eliminar btn" title="Eliminar"><i class="fa-solid fa-trash"></i></button>',
     );
 
     //tr.appendChild(td);
@@ -1163,6 +1163,7 @@ function popupInicio(popup) {
     .animate({ bottom: alto / 2, left: ancho / 8 }, "slow");
 }
 
+//* Animación final, se pone en posición
 function popupSalir(popup, rotacion) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1179,6 +1180,7 @@ function popupSalir(popup, rotacion) {
     .animate({ left: ancho / 2, bottom: alto / 2 }, "slow");
 }
 
+//* Esta animación se itera, es la que hace girar al rededor de la pantalla
 function popupCentrifuga(popup, iterar) {
   let alto = $(window).height() - $(popup).outerHeight();
   let ancho = $(window).width() - $(popup).outerWidth();
@@ -1274,6 +1276,7 @@ function addDarkTheme() {
   localStorage.darkTheme = dark;
 }
 
+//! Deprecated: Este metodo servia para actualizar las imagenes
 function carruselImagenes() {
   Carousel(
     document.getElementById("myCarousel"),
