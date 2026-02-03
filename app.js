@@ -437,9 +437,15 @@ function listeners() {
     },
   });
 
-  $(".me > .btn").click(function () {
-    $("div.msg").toggleClass("hide");
-    $(this).toggleClass("msgTop");
+  $(".me > .btn").on({
+    mouseenter: function () {
+      $("div.msg").fadeToggle("slow");
+      $(this).toggleClass("msgTop");
+    },
+    mouseleave: function () {
+      $("div.msg").fadeToggle(0);
+      $(this).toggleClass("msgTop");
+    },
   });
 }
 
@@ -1076,6 +1082,7 @@ function imgs() {
 }
 
 //TODO: JQuery do
+//TODO: Mucha mierda
 // Crea un popup que añade al html
 function createPopup() {
   //let popup = document.createElement("div");
@@ -1109,6 +1116,83 @@ function createPopup() {
 
   //document.body.appendChild(popup);
   $("body").append(blur);
+
+  let rotacion = { deg: 0 };
+  rotar(rotacion);
+  popupInicio(popup);
+  let iterar = 1;
+  for (let i = 0; i < 30; i++) {
+    if (i % 3 === 0) ++iterar;
+
+    popupCentrifuga(popup, iterar);
+  }
+
+  popupSalir(popup, rotacion);
+
+  $(blur).click(function () {
+    let alto = $(window).height() - $(popup).outerHeight();
+    let ancho = $(window).width() - $(popup).outerWidth();
+    $(rotacion).stop(true);
+    $(".popup")
+      .stop(true, true)
+      .animate({ bottom: alto / 2, left: ancho / 2 }, 0);
+    $(".popup").css("transform", "rotate(0deg)");
+  });
+}
+
+function rotar(rotacion) {
+  $(rotacion).animate(
+    { deg: 400000 },
+    {
+      duration: 100000,
+      step: function (now) {
+        $(".popup").css("transform", "rotate(" + now + "deg)");
+      },
+    },
+  );
+}
+
+function popupInicio(popup) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+
+  $(".popup").animate({ bottom: alto / 2, left: ancho / 2 }, 0);
+  $(".popup")
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 5000)
+    .animate({ bottom: alto / 2, left: ancho / 8 }, "slow");
+}
+
+function popupSalir(popup, rotacion) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+
+  $(".popup")
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 0, function () {
+      $(rotacion).stop(true);
+      $(".popup").css("transform", "rotate(0)");
+    })
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 0)
+    .animate({ bottom: alto / 2, left: ancho / 2 }, 1000)
+    .animate({ left: -1000 }, "slow")
+    .animate({ left: ancho / 2, bottom: alto + 1000 }, 0)
+    .animate({ left: ancho / 2, bottom: alto / 2 }, "slow");
+}
+
+function popupCentrifuga(popup, iterar) {
+  let alto = $(window).height() - $(popup).outerHeight();
+  let ancho = $(window).width() - $(popup).outerWidth();
+  let velocidad = 300 / iterar;
+
+  $(".popup")
+    .animate({ bottom: alto / 2 }, 0)
+    .animate({ bottom: alto / 8, left: ancho / 8 }, velocidad)
+    .animate({ bottom: 0, left: ancho / 2 }, velocidad)
+    .animate({ bottom: alto / 8, left: ancho - ancho / 8 }, velocidad)
+    .animate({ bottom: alto / 2, left: ancho }, velocidad)
+    .animate({ bottom: alto - alto / 8, left: ancho - ancho / 8 }, velocidad)
+    .animate({ bottom: alto, left: ancho / 2 }, velocidad)
+    .animate({ bottom: alto - alto / 8, left: ancho / 8 }, velocidad)
+    .animate({ bottom: alto / 2, left: 0 }, velocidad);
 }
 
 /**
@@ -1219,7 +1303,7 @@ $(document).ready(function () {
     //document.getElementById("mostrarForm").innerHTML = "Iniciar";
     $("#mostrarForm").text("Iniciar");
   } else {
-    //!createPopup();
+    createPopup();
   }
   listeners();
   //!imgs();
