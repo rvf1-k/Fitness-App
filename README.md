@@ -1,7 +1,33 @@
-# Práctica final tema 5. DOM
+# Practica final tema 6 - Parte 1 - JQuery
 ## Rafael Moreno Riquelme - 2DAW
 
-Actualizaciones:
+### Refractorización
+
+Toda la logica ha sido actualizada con Jquery, incluyendo el contenido dinamico.
+
+### Animación de inicio
+
+Al acceder a la web por primera vez, el *popup* que daba la bienvenida está tiene animaciones realizadas con Jquery.
+
+### Slide
+
+Se ha añadido un elemento *slide* que funciona como tutorial, este es expansible y no se retrae hasta pulsar el botón de nuevo.
+
+### Fade
+
+Se ha incluido mi nombre en forma de botón en la zona superior, cuando el ratón se posa aparece un mensaje con fade.
+
+### SlideShow
+
+Las imagenes tienen integradas [fancybox](https://fancyapps.com/fancybox/) y [carousel](https://fancyapps.com/carousel/).
+
+De este se ha utilizado el metodo css para que solo aparezcan las flechas cuando estás sobre su contenedor.
+
+
+
+---
+
+# Práctica final tema 6. DOM
 
 ### Mejor aspecto
 - Añadido sombras y mejores contornos

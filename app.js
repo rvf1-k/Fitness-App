@@ -1,6 +1,3 @@
-//Todo: Warning de cerrar sesion
-//TODO: Anim
-
 class Usuario {
   constructor(usuario, password) {
     this.usuario = usuario;

@@ -79,10 +79,7 @@ div.msg {
   top: 0;
   z-index: 5;
   width: 100%;
-}
-
-.hide {
-  display: none;
+  text-align: start;
 }
 
 h1 {
