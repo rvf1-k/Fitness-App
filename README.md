@@ -3,12 +3,12 @@
 
 ### AJAX
 Añadir a cada entrenamiento un entrenador, ciudad y la temperatura en esa ciudad
-> Ver en código **JavaScript**.
+> Ver en código [**JavaScript**](https://github.com/rvf1-k/Fitness-App/blob/c3a04cf434e14fd1f9708c08885c0953f9826076/app.js#L82-L94).
 
 
 ### JQuery UI
 Añadido la propiedad `draggable()` al `.popup`.
-> Ver en código **JavaScript**.
+> Ver en código [**JavaScript**](https://github.com/rvf1-k/Fitness-App/blob/c3a04cf434e14fd1f9708c08885c0953f9826076/app.js#L1085).
 
 ---
 # Practica final tema 6 - Parte 1 - JQuery
