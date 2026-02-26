@@ -75,6 +75,23 @@ class Entrenamiento {
     this.fecha = fecha;
     this.tipo = tipo;
     this.nivel = this.marcarNivel();
+    this.entrenador = null;
+    this.ciudad = null;
+    this.temperatura = null;
+
+    this.asignarEntrenador().then((entrenador) => {
+      console.log(entrenador);
+
+      this.entrenador = entrenador.name;
+      this.ciudad = entrenador.address.city;
+
+      const lat = entrenador.address.geo.lat;
+      const lng = entrenador.address.geo.lng;
+      this.asignarTemperatura(lat, lng).then((temperatura) => {
+        this.temperatura = temperatura;
+        console.log(temperatura);
+      });
+    });
   }
 
   getId() {
@@ -131,6 +148,26 @@ class Entrenamiento {
     }
   }
 
+  asignarEntrenador() {
+    return fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then(
+        (usuarios) => usuarios[Math.floor(Math.random() * usuarios.length)],
+      );
+  }
+
+  asignarTemperatura(lat, lon) {
+    return fetch(
+      "http://api.openweathermap.org/data/2.5/weather?lat=" +
+        lat +
+        "&lon=" +
+        lon +
+        "&appid=3ff8e1bcbcdf5b2dfd6942bc7dab0cfe&units=metric",
+    )
+      .then((response) => response.json())
+      .then((data) => data.main.temp);
+  }
+
   /**
    * Este metodo da el formato de hora española
    * * No lo hemos dado en clase, lo he buscado https://www.w3schools.com/jsref/jsref_tolocalestring.asp
@@ -164,11 +201,17 @@ class Entrenamiento {
     return `<i class="fa-solid ${this.getIconTipo()}"></i><br>${this.tipo}`;
   }
 
+  grados() {
+    return `${Math.round(this.temperatura)}º`;
+  }
   mostrarInfo() {
     const tr = $("<tr>");
 
     const content = [
       this.tipoHtml(),
+      this.entrenador,
+      this.ciudad,
+      this.grados(),
       this.distancia,
       this.getHorasMin(),
       this.getVelocidad().toFixed(2),
@@ -324,9 +367,9 @@ function listeners() {
     $(".blur").remove();
   });
 
-  $("#TutorialBtn").click(function(){
-      $(".tutorial").slideToggle()
-  })
+  $("#TutorialBtn").click(function () {
+    $(".tutorial").slideToggle();
+  });
 
   //* Al pulsar el botón de cerrar sesión se eliminan los datos en localStorage y se reinicia la pagina
   $("#cerrarSesion").click(function () {
@@ -432,7 +475,6 @@ function hider(id = null) {
  * Estos datos recogidos se añaden a localStorage
  */
 function crearPersona() {
-
   let ultimatum = true;
   let mensajes = [];
   $("#form_persona input").each(function () {
@@ -510,7 +552,6 @@ function crearPersona() {
  * Por ello, los compruebo a parte siendo estos las horas y el tipo el tipo select que no es input
  */
 function crearEntrenamiento() {
-
   let mensajes = [];
   let ultimatum = true;
   $("#añadirEntrenamiento input").each(function () {
@@ -600,7 +641,6 @@ function crearEntrenamiento() {
   Comoparte la logica de crearPersona(), pero para crear los datos de la cuenta
 */
 function crearUsuario() {
-
   let ultimatum = true;
   let mensajes = [];
   $("#form_registro input").each(function () {
@@ -700,6 +740,9 @@ function createTable() {
 
   const headers = [
     "Tipo",
+    "Entrenador",
+    "Ciudad",
+    "Temperatura",
     "Distancia (m)",
     "Tiempo",
     "Velocidad (km/h)",
@@ -858,7 +901,7 @@ function imgs() {
 //* Crea un popup que añade al html
 function createPopup() {
   const popup = $("<div>").addClass("popup item");
-
+  popup.attr("id", "draggable");
   const equis = $("<i>").addClass("fa-solid fa-xmark");
 
   const cerrar = $("<span>").addClass("cerrar").append(equis);
@@ -887,7 +930,7 @@ function createPopup() {
 
   popupSalir(popup, rotacion);
 
-  //* Al hacer click en el div que ocupa toda la pantalla, si se pulsa durante la anim está se detiene 
+  //* Al hacer click en el div que ocupa toda la pantalla, si se pulsa durante la anim está se detiene
   //* Pone el popup centrado
   $(blur).click(function () {
     let alto = $(window).height() - $(popup).outerHeight();
@@ -1039,6 +1082,7 @@ $(document).ready(function () {
     $("#mostrarForm").text("Iniciar");
   } else {
     createPopup();
+    $("#draggable").draggable();
   }
   listeners();
   //!imgs();

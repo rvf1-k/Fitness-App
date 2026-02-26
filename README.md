@@ -1,7 +1,17 @@
-# Practica final tema 6 - Parte 1 - JQuery
-
+# Practica final tema 7 - Parte 2 - AJAX y JQuery UI
 ## Rafael Moreno Riquelme - 2DAW
 
+### AJAX
+Añadir a cada entrenamiento un entrenador, ciudad y la temperatura en esa ciudad
+> Ver en código **JavaScript**.
+
+
+### JQuery UI
+Añadido la propiedad `draggable()` al `.popup`.
+> Ver en código **JavaScript**.
+
+---
+# Practica final tema 6 - Parte 1 - JQuery
 ### Refractorización
 
 - Toda la lógica ha sido actualizada con Jquery, incluyendo el contenido dinámico. En [**docs**](https://github.com/rvf1-k/Fitness-App/blob/8e32ac70ce6f16aaeda3ab7142c6bf648a532001/docs) se encuentra el código anterior de [**app.js**](https://github.com/rvf1-k/Fitness-App/blob/8e32ac70ce6f16aaeda3ab7142c6bf648a532001/app.js) comentado, pudiendo ver el traspaso de su lógica.
